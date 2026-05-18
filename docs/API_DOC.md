@@ -91,3 +91,19 @@
 | POST | `/api/devis/{commande_id}` | Générer un devis PDF | Admin/Agent |
 | GET | `/api/devis/{id}` | Télécharger un devis | Admin/Agent/Client |
 | POST | `/api/devis/{id}/envoyer` | Envoyer le devis par email | Admin/Agent |
+
+
+---
+
+##  Catégories de produits
+
+| # | Catégorie | Exemples de produits |
+|---|---|---|
+| 1 | Provisions | Viandes, fruits, produits laitiers, jus, céréales |
+| 2 | Bonded Stores | Cigarettes, alcools, vins, bières, chocolats, parfums |
+| 3 | Deck / Engine / Electrical Spares | Câbles, vannes, outils, instruments de mesure |
+| 4 | Cabin / Salon Stores | Literie, vaisselle, ustensiles, électroménager |
+| 5 | Safety Equipment | Gilets de sauvetage, extincteurs, combinaisons SOLAS |
+| 6 | Anti-Piracy Equipment | Razor wires, Water cannon |
+| 7 | Bunker Supply | Fuel oils, luboils |
+| 8 | Services Spéciaux | Fumigation, Location matériel, Workshop, Recharge CO2 |
