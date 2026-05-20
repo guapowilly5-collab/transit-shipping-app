@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscription — Lome Marine Supplier Global</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="register-page">
+
+  <!-- Fond animé vagues -->
+  <div class="reg-bg">
+    <div class="reg-wave reg-wave-1"></div>
+    <div class="reg-wave reg-wave-2"></div>
+    <div class="reg-wave reg-wave-3"></div>
+  </div>
+
+  <div class="reg-wrapper">
+
+    <!-- Panneau gauche — Branding -->
+    <aside class="reg-brand">
+      <a href="../index.html" class="reg-back">← Retour à l'accueil</a>
+
+      <div class="reg-brand-logo">
+        <span class="anchor-icon">⚓</span>
+        <span>LOME MARINE</span>
+      </div>
+
+      <h2 class="reg-brand-title">Rejoignez notre réseau portuaire</h2>
+      <p class="reg-brand-sub" style="color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.75; margin-bottom: 2rem;">
+        Accédez au catalogue tarifé complet, passez vos commandes en ligne et bénéficiez d'un suivi en temps réel depuis n'importe quel port d'Afrique de l'Ouest.
+      </p>
+
+      <ul class="reg-features">
+        <li>
+          <span class="reg-feat-icon">🚢</span>
+          <div>
+            <strong>Catalogue tarifé exclusif</strong>
+            <p>Provisions, équipements, pièces — prix réservés aux navires validés.</p>
+          </div>
+        </li>
+        <li>
+          <span class="reg-feat-icon">📦</span>
+          <div>
+            <strong>Commandes en ligne</strong>
+            <p>Passez et suivez vos commandes de provision & bonded store 24h/24.</p>
+          </div>
+        </li>
+        <li>
+          <span class="reg-feat-icon">📍</span>
+          <div>
+            <strong>Multi-ports</strong>
+            <p>Lomé, Cotonou, Lagos, Tema, Douala, Abidjan — livraison garantie.</p>
+          </div>
+        </li>
+        <li>
+          <span class="reg-feat-icon">🔒</span>
+          <div>
+            <strong>Compte validé sous 24h</strong>
+            <p>Notre équipe vérifie votre dossier et active votre accès rapidement.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="reg-already">
+        Déjà inscrit ? <a href="login.html">Se connecter</a>
+      </div>
+    </aside>
+
+    <!-- Panneau droit — Formulaire -->
+    <main class="reg-form-panel">
+      <div class="reg-form-header">
+        <h1>Créer un compte</h1>
+        <p>Remplissez les informations de votre navire ou de votre agence</p>
+      </div>
+
+      <!-- Onglets type de compte -->
+      <div class="reg-tabs">
+        <button class="reg-tab active" onclick="switchRegTab(this, 'vessel')">🚢 Navire</button>
+        <button class="reg-tab" onclick="switchRegTab(this, 'agent')">🏢 Agent / Société</button>
+      </div>
+
+      <!-- Étapes -->
+      <div class="reg-steps">
+        <div class="reg-step active" data-step="1">
+          <span>1</span><p>Identification</p>
+        </div>
+        <div class="reg-step-line"></div>
+        <div class="reg-step" data-step="2">
+          <span>2</span><p>Navire / Société</p>
+        </div>
+        <div class="reg-step-line"></div>
+        <div class="reg-step" data-step="3">
+          <span>3</span><p>Documents</p>
+        </div>
+      </div>
+
+      <form class="reg-form" id="registerForm" novalidate>
+
+        <!-- ÉTAPE 1 — Identification -->
+        <div class="reg-step-content active" id="step1">
+          <div class="reg-field-group">
+            <div class="reg-field">
+              <label for="firstName">Prénom *</label>
+              <input type="text" id="firstName" name="firstName" placeholder="Jean" required />
+            </div>
+            <div class="reg-field">
+              <label for="lastName">Nom *</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Dupont" required />
+            </div>
+          </div>
+          <div class="reg-field">
+            <label for="regEmail">Adresse e-mail *</label>
+            <input type="email" id="regEmail" name="email" placeholder="capitaine@navire.com" required />
+          </div>
+          <div class="reg-field">
+            <label for="regPhone">Téléphone / WhatsApp *</label>
+            <input type="tel" id="regPhone" name="phone" placeholder="+228 XX XX XX XX" required />
+          </div>
+          <div class="reg-field-group">
+            <div class="reg-field">
+              <label for="regPassword">Mot de passe *</label>
+              <div class="reg-input-icon">
+                <input type="password" id="regPassword" name="password" placeholder="••••••••" required />
+                <button type="button" class="toggle-pwd" onclick="togglePassword('regPassword', this)">👁</button>
+              </div>
+              <div class="pwd-strength" id="pwdStrength">
+                <div class="pwd-bar" id="pwdBar"></div>
+              </div>
+              <small class="pwd-label" id="pwdLabel"></small>
+            </div>
+            <div class="reg-field">
+              <label for="regConfirm">Confirmer *</label>
+              <div class="reg-input-icon">
+                <input type="password" id="regConfirm" name="confirm" placeholder="••••••••" required />
+                <button type="button" class="toggle-pwd" onclick="togglePassword('regConfirm', this)">👁</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="reg-btn-next" onclick="goStep(2)">Suivant →</button>
+        </div>
+
+        <!-- ÉTAPE 2 — Navire ou Société -->
+        <div class="reg-step-content" id="step2">
+
+          <!-- Onglet Navire -->
+          <div id="vesselFields">
+            <div class="reg-field-group">
+              <div class="reg-field">
+                <label for="vesselName">Nom du navire *</label>
+                <input type="text" id="vesselName" name="vesselName" placeholder="MV Atlantic Star" />
+              </div>
+              <div class="reg-field">
+                <label for="imoNumber">Numéro IMO *</label>
+                <input type="text" id="imoNumber" name="imoNumber" placeholder="IMO 1234567" />
+              </div>
+            </div>
+            <div class="reg-field-group">
+              <div class="reg-field">
+                <label for="vesselType">Type de navire *</label>
+                <select id="vesselType" name="vesselType">
+                  <option value="">Sélectionner…</option>
+                  <option>Bulk Carrier</option>
+                  <option>Tanker</option>
+                  <option>Cargo / Container</option>
+                  <option>Cruise Ship</option>
+                  <option>Offshore Supply Boat</option>
+                  <option>Tug / Barge</option>
+                  <option>Oil Rig</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div class="reg-field">
+                <label for="vesselFlag">Pavillon *</label>
+                <input type="text" id="vesselFlag" name="vesselFlag" placeholder="Panama, Togo, Ghana…" />
+              </div>
+            </div>
+            <div class="reg-field-group">
+              <div class="reg-field">
+                <label for="callSign">Indicatif radio</label>
+                <input type="text" id="callSign" name="callSign" placeholder="ABCD1" />
+              </div>
+              <div class="reg-field">
+                <label for="grossTonnage">Jauge brute (GT)</label>
+                <input type="number" id="grossTonnage" name="grossTonnage" placeholder="15000" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Onglet Agent/Société -->
+          <div id="agentFields" class="hidden">
+            <div class="reg-field">
+              <label for="companyName">Raison sociale *</label>
+              <input type="text" id="companyName" name="companyName" placeholder="Atlantic Shipping SARL" />
+            </div>
+            <div class="reg-field-group">
+              <div class="reg-field">
+                <label for="regNumber">Numéro RCCM / RC *</label>
+                <input type="text" id="regNumber" name="regNumber" placeholder="TG-LOM-2023-XXXX" />
+              </div>
+              <div class="reg-field">
+                <label for="country">Pays d'immatriculation *</label>
+                <input type="text" id="country" name="country" placeholder="Togo, Ghana, Nigeria…" />
+              </div>
+            </div>
+            <div class="reg-field">
+              <label for="companyAddress">Adresse complète *</label>
+              <input type="text" id="companyAddress" name="companyAddress" placeholder="Boulevard du Mono, Lomé" />
+            </div>
+          </div>
+
+          <!-- Port principal -->
+          <div class="reg-field">
+            <label for="homePort">Port principal d'escale *</label>
+            <select id="homePort" name="homePort">
+              <option value="">Sélectionner un port…</option>
+              <optgroup label="🇹🇬 Togo">
+                <option>Lomé</option>
+              </optgroup>
+              <optgroup label="🇳🇬 Nigeria">
+                <option>Lagos</option>
+                <option>Port-Harcourt</option>
+                <option>Onne</option>
+                <option>Calabar</option>
+                <option>Warri / Escravos</option>
+              </optgroup>
+              <optgroup label="🇧🇯 Bénin">
+                <option>Cotonou</option>
+              </optgroup>
+              <optgroup label="🇬🇭 Ghana">
+                <option>Tema</option>
+                <option>Takoradi</option>
+              </optgroup>
+              <optgroup label="🇨🇲 Cameroun">
+                <option>Douala</option>
+                <option>Kribi</option>
+              </optgroup>
+              <optgroup label="🇨🇮 Côte d'Ivoire">
+                <option>Abidjan</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="reg-btn-row">
+            <button type="button" class="reg-btn-back" onclick="goStep(1)">← Retour</button>
+            <button type="button" class="reg-btn-next" onclick="goStep(3)">Suivant →</button>
+          </div>
+        </div>
+
+        <!-- ÉTAPE 3 — Documents -->
+        <div class="reg-step-content" id="step3">
+          <p class="reg-doc-intro">
+            Pour valider votre compte, veuillez joindre les documents requis. Les formats acceptés sont PDF, JPG, PNG (max 5 Mo chacun).
+          </p>
+
+          <div class="reg-doc-zone" id="dropDoc1" onclick="document.getElementById('docCertificle').click()">
+            <input type="file" id="docCertificle" name="docCertificle" accept=".pdf,.jpg,.png" class="hidden" onchange="showFileName(this, 'label1')" />
+            <span class="doc-icon">📄</span>
+            <p><strong>Certificat d'immatriculation / Acte de constitution</strong></p>
+            <small id="label1">Glissez votre fichier ici ou cliquez pour parcourir</small>
+          </div>
+
+          <div class="reg-doc-zone" id="dropDoc2" onclick="document.getElementById('docID').click()">
+            <input type="file" id="docID" name="docID" accept=".pdf,.jpg,.png" class="hidden" onchange="showFileName(this, 'label2')" />
+            <span class="doc-icon">🪪</span>
+            <p><strong>Pièce d'identité du responsable</strong></p>
+            <small id="label2">Glissez votre fichier ici ou cliquez pour parcourir</small>
+          </div>
+
+          <div class="reg-doc-zone optional" id="dropDoc3" onclick="document.getElementById('docOther').click()">
+            <input type="file" id="docOther" name="docOther" accept=".pdf,.jpg,.png" class="hidden" onchange="showFileName(this, 'label3')" />
+            <span class="doc-icon">📋</span>
+            <p><strong>Document supplémentaire</strong> <span class="badge-opt">Optionnel</span></p>
+            <small id="label3">Glissez votre fichier ici ou cliquez pour parcourir</small>
+          </div>
+
+          <div class="reg-field reg-checkbox-field">
+            <label class="reg-checkbox-label">
+              <input type="checkbox" id="acceptTerms" name="acceptTerms" required />
+              <span>J'accepte les <a href="#" target="_blank">conditions générales d'utilisation</a> et la <a href="#" target="_blank">politique de confidentialité</a> de Lome Marine Supplier Global.</span>
+            </label>
+          </div>
+
+          <div class="reg-btn-row">
+            <button type="button" class="reg-btn-back" onclick="goStep(2)">← Retour</button>
+            <button type="submit" class="reg-btn-submit" id="submitBtn">
+              <span id="submitText">Soumettre ma demande</span>
+              <span id="submitSpinner" class="hidden">⏳ Envoi en cours…</span>
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Succès -->
+      <div class="reg-success hidden" id="regSuccess">
+        <div class="success-icon">⚓</div>
+        <h2>Demande envoyée !</h2>
+        <p>Notre équipe examinera votre dossier et activera votre compte sous <strong>24 heures</strong>. Vous recevrez un e-mail de confirmation.</p>
+        <a href="login.html" class="reg-btn-next" style="display:inline-block; margin-top: 1.5rem;">Se connecter</a>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

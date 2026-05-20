@@ -3,216 +3,376 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lome Marine Supplier Global</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>Lome Marine Supplier Global — Ship Chandler Afrique de l'Ouest</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<!-- ─── NAVBAR ─── -->
-<nav>
-  <div class="nav-logo">LOME <span>MARINE</span></div>
-  <ul class="nav-links" id="navLinks">
+<!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">
+    <div class="logo-icon">⚓</div>
+    <span class="logo-text">Lome <span>Marine</span></span>
+  </a>
+  <ul class="navbar-links" id="navLinks">
     <li><a href="#services">Services</a></li>
     <li><a href="#ports">Ports</a></li>
     <li><a href="#how">Fonctionnement</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="nav-actions">
+  <div class="navbar-actions">
     <button class="nav-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
-    <a href="pages/login.html" class="btn-nav-out">Connexion</a>
-    <a href="pages/register.html" class="btn-nav-in">Espace navire</a>
+    <a href="pages/login.html" class="btn-ghost">Connexion</a>
+    <a href="pages/register.html" class="btn-primary">Espace navire</a>
   </div>
 </nav>
 
-<!-- ─── HERO ─── -->
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-lines"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
       <span>Ship Chandler — Afrique de l'Ouest · Depuis 2023</span>
     </div>
     <h1>
-      Votre base<br/>
-      <span class="accent">d'approvisionnement</span>
-      maritime en <span class="sub-accent">Afrique</span>
+      Votre partenaire<br/>
+      <span class="highlight">maritime de confiance</span><br/>
+      en Afrique
     </h1>
     <p class="hero-desc">
-      Provisions, équipements de sécurité, bunker, pièces techniques — livrés à bord dans les principaux ports d'Afrique de l'Ouest. Disponible 24h/24, 7j/7.
+      Provisions, équipements de sécurité, bunker et services techniques — livrés à bord dans les principaux ports d'Afrique de l'Ouest. Disponible 24h/24, 7j/7.
     </p>
-    <div class="hero-ctas">
-      <a href="#contact" class="btn-cta-p">Demander un devis</a>
-      <a href="#services" class="btn-cta-o">Voir nos services</a>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-hero-primary">
+        Demander un devis →
+      </a>
+      <a href="pages/register.html" class="btn-hero-secondary">
+        Créer un compte navire
+      </a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><strong>10+</strong><span>Ports actifs</span></div>
-      <div class="hero-stat"><strong>6</strong><span>Pays couverts</span></div>
-      <div class="hero-stat"><strong>24/7</strong><span>Disponibilité</span></div>
-      <div class="hero-stat"><strong>8</strong><span>Catégories</span></div>
+      <div class="hero-stat">
+        <strong><span>10</span>+</strong>
+        <p>Ports actifs</p>
+      </div>
+      <div class="hero-stat">
+        <strong><span>6</span></strong>
+        <p>Pays couverts</p>
+      </div>
+      <div class="hero-stat">
+        <strong>24/7</strong>
+        <p>Disponibilité</p>
+      </div>
+      <div class="hero-stat">
+        <strong><span>8</span></strong>
+        <p>Catégories</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hero-card-title">Réseau de ports actifs</div>
+      <div class="hero-port-list">
+        <div class="hero-port-item">
+          <div class="port-info">
+            <span class="port-flag">🇹🇬</span>
+            <div>
+              <div class="port-name">Port de Lomé</div>
+              <div class="port-country">Togo</div>
+            </div>
+          </div>
+          <span class="port-status hq">Siège</span>
+        </div>
+        <div class="hero-port-item">
+          <div class="port-info">
+            <span class="port-flag">🇳🇬</span>
+            <div>
+              <div class="port-name">Lagos · Port-Harcourt</div>
+              <div class="port-country">Nigeria</div>
+            </div>
+          </div>
+          <span class="port-status active">Actif</span>
+        </div>
+        <div class="hero-port-item">
+          <div class="port-info">
+            <span class="port-flag">🇬🇭</span>
+            <div>
+              <div class="port-name">Tema · Takoradi</div>
+              <div class="port-country">Ghana</div>
+            </div>
+          </div>
+          <span class="port-status active">Actif</span>
+        </div>
+        <div class="hero-port-item">
+          <div class="port-info">
+            <span class="port-flag">🇧🇯</span>
+            <div>
+              <div class="port-name">Port de Cotonou</div>
+              <div class="port-country">Bénin</div>
+            </div>
+          </div>
+          <span class="port-status active">Actif</span>
+        </div>
+        <div class="hero-port-item">
+          <div class="port-info">
+            <span class="port-flag">🇨🇲</span>
+            <div>
+              <div class="port-name">Douala · Kribi</div>
+              <div class="port-country">Cameroun</div>
+            </div>
+          </div>
+          <span class="port-status active">Actif</span>
+        </div>
+        <div class="hero-port-item">
+          <div class="port-info">
+            <span class="port-flag">🇨🇮</span>
+            <div>
+              <div class="port-name">Port d'Abidjan</div>
+              <div class="port-country">Côte d'Ivoire</div>
+            </div>
+          </div>
+          <span class="port-status active">Actif</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ─── BANDEAU PORTS ─── -->
-<div class="port-banner">
-  <span class="port-banner-label">Ports desservis :</span>
-  <div class="port-pills">
-    <span class="port-pill">Lomé 🇹🇬</span>
-    <span class="port-pill">Lagos 🇳🇬</span>
-    <span class="port-pill">Cotonou 🇧🇯</span>
-    <span class="port-pill">Tema 🇬🇭</span>
-    <span class="port-pill">Takoradi 🇬🇭</span>
-    <span class="port-pill">Douala 🇨🇲</span>
-    <span class="port-pill">Abidjan 🇨🇮</span>
-    <span class="port-pill">Port-Harcourt 🇳🇬</span>
-  </div>
-</div>
-
-<!-- ─── SERVICES ─── -->
-<section id="services">
-  <div class="services-top">
+<!-- ══════════════════════════════════════
+     SERVICES
+══════════════════════════════════════ -->
+<section id="services" class="section section-light">
+  <div class="section-header-row">
     <div>
-      <p class="label-tag">Ce que nous fournissons</p>
-      <h2 class="section-h">Catalogue de services complets</h2>
+      <p class="section-tag">Ce que nous fournissons</p>
+      <h2 class="section-title">Services complets<br/>pour votre navire</h2>
     </div>
-    <p class="section-p">Tout ce dont votre navire a besoin, au bon port, au bon moment. Commandez en ligne ou via votre agent.</p>
+    <p class="section-subtitle">Tout ce dont votre navire a besoin, au bon port, au bon moment. Commandez en ligne ou via votre agent.</p>
   </div>
   <div class="services-grid">
     <div class="service-card">
-      <div class="sc-icon">🍱</div>
-      <div class="sc-title">Provisions</div>
-      <p class="sc-desc">Frais, surgelés, produits laitiers, viandes, fruits, boulangerie, céréales et produits secs pour l'équipage.</p>
-      <span class="sc-tag">Catalogue complet</span>
+      <div class="service-icon">🍱</div>
+      <div class="service-name">Provisions</div>
+      <p class="service-desc">Frais, surgelés, produits laitiers, viandes, fruits, boulangerie, céréales et produits secs pour l'équipage.</p>
+      <span class="service-tag">Catalogue complet</span>
     </div>
     <div class="service-card">
-      <div class="sc-icon">🍾</div>
-      <div class="sc-title">Bonded Stores</div>
-      <p class="sc-desc">Cigarettes, alcools, vins, bières, chocolats, parfums en franchise douanière pour les équipages.</p>
-      <span class="sc-tag">Sur commande</span>
+      <div class="service-icon">🍾</div>
+      <div class="service-name">Bonded Stores</div>
+      <p class="service-desc">Cigarettes, alcools, vins, bières, chocolats et parfums en franchise douanière pour les équipages.</p>
+      <span class="service-tag">Sur commande</span>
     </div>
     <div class="service-card">
-      <div class="sc-icon">⚙️</div>
-      <div class="sc-title">Deck / Engine / Electrical</div>
-      <p class="sc-desc">Câbles, cordes, vannes, outils, pièces de rechange. Référence catalogues ISSA et IMPA.</p>
-      <span class="sc-tag">ISSA / IMPA</span>
+      <div class="service-icon">⚙️</div>
+      <div class="service-name">Deck / Engine / Electrical</div>
+      <p class="service-desc">Câbles, cordes, vannes, outils, pièces de rechange. Référence catalogues ISSA et IMPA.</p>
+      <span class="service-tag">ISSA / IMPA</span>
     </div>
     <div class="service-card">
-      <div class="sc-icon">🛏️</div>
-      <div class="sc-title">Cabin / Salon Stores</div>
-      <p class="sc-desc">Literie, vaisselle, ustensiles, produits ménagers, électroménager pour le confort à bord.</p>
-      <span class="sc-tag">Catalogue complet</span>
+      <div class="service-icon">🛏️</div>
+      <div class="service-name">Cabin / Salon Stores</div>
+      <p class="service-desc">Literie, vaisselle, ustensiles, produits ménagers et électroménager pour le confort à bord.</p>
+      <span class="service-tag">Catalogue complet</span>
     </div>
     <div class="service-card">
-      <div class="sc-icon">🦺</div>
-      <div class="sc-title">Safety Equipment</div>
-      <p class="sc-desc">Gilets, radeaux, extincteurs CO2, combinaisons d'immersion. Certifié SOLAS / USCG / Lloyd's.</p>
-      <span class="sc-tag">Certifié SOLAS</span>
+      <div class="service-icon">🦺</div>
+      <div class="service-name">Safety Equipment</div>
+      <p class="service-desc">Gilets, radeaux, extincteurs CO2, combinaisons d'immersion. Certifié SOLAS / USCG / Lloyd's.</p>
+      <span class="service-tag">Certifié SOLAS</span>
     </div>
     <div class="service-card">
-      <div class="sc-icon">⛽</div>
-      <div class="sc-title">Bunker Supply</div>
-      <p class="sc-desc">Toutes grades de fuel oils et luboils. Nominations acceptées 24h/24 dans tous nos ports.</p>
-      <span class="sc-tag">24h/24</span>
+      <div class="service-icon">⛽</div>
+      <div class="service-name">Bunker Supply</div>
+      <p class="service-desc">Toutes grades de fuel oils et luboils. Nominations acceptées 24h/24 dans tous nos ports.</p>
+      <span class="service-tag">24h/24</span>
     </div>
     <div class="service-card">
-      <div class="sc-icon">🔒</div>
-      <div class="sc-title">Anti-Piracy</div>
-      <p class="sc-desc">Razor wires et water cannon pour la protection des navires en zones à risque.</p>
-      <span class="sc-tag">Sur demande</span>
+      <div class="service-icon">🛡️</div>
+      <div class="service-name">Anti-Piracy</div>
+      <p class="service-desc">Razor wires et water cannon pour la protection des navires naviguant en zones à risque.</p>
+      <span class="service-tag">Sur demande</span>
     </div>
     <div class="service-card">
-      <div class="sc-icon">🌊</div>
-      <div class="sc-title">Services spéciaux</div>
-      <p class="sc-desc">Fumigation, location matériel, nettoyage sous-marin, workshop, recharge CO2, inspection digitale.</p>
-      <span class="sc-tag">Devis sur mesure</span>
+      <div class="service-icon">🔧</div>
+      <div class="service-name">Services spéciaux</div>
+      <p class="service-desc">Fumigation, location matériel, nettoyage sous-marin, workshop, recharge CO2 et inspection digitale.</p>
+      <span class="service-tag">Devis sur mesure</span>
     </div>
   </div>
 </section>
 
-<!-- ─── PORTS ─── -->
-<section id="ports">
-  <p class="label-tag">Notre réseau portuaire</p>
-  <h2 class="section-h">Présence dans 6 pays d'Afrique</h2>
-  <div class="ports-body">
+<!-- ══════════════════════════════════════
+     PORTS
+══════════════════════════════════════ -->
+<section id="ports" class="section section-dark">
+  <div class="section-header">
+    <p class="section-tag" style="color: var(--teal-bright);">Notre réseau portuaire</p>
+    <h2 class="section-title section-title-light">Présence dans<br/>6 pays d'Afrique</h2>
+    <p class="section-subtitle section-subtitle-light">Siège à Lomé, Togo — bureaux locaux dans 5 pays pour vous servir au plus près.</p>
+  </div>
+  <div class="ports-layout">
     <table class="ports-table">
       <tbody>
-        <tr><td class="flag-col">🇹🇬 Togo</td><td class="port-names">Port de Lomé <span class="hq-badge">Siège</span></td></tr>
-        <tr><td class="flag-col">🇳🇬 Nigeria</td><td class="port-names">Lagos · Calabar · Port-Harcourt · Onne · Escravos · Warri</td></tr>
-        <tr><td class="flag-col">🇧🇯 Bénin</td><td class="port-names">Port de Cotonou</td></tr>
-        <tr><td class="flag-col">🇬🇭 Ghana</td><td class="port-names">Tema · Takoradi</td></tr>
-        <tr><td class="flag-col">🇨🇲 Cameroun</td><td class="port-names">Douala · Kribi</td></tr>
-        <tr><td class="flag-col">🇨🇮 Côte d'Ivoire</td><td class="port-names">Port d'Abidjan</td></tr>
+        <tr>
+          <td>
+            <div class="port-flag-name">
+              <span class="port-flag">🇹🇬</span>
+              <div>
+                <div class="port-label">Port de Lomé</div>
+                <div class="port-sub">Togo</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="port-badge hq">Siège principal</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="port-flag-name">
+              <span class="port-flag">🇳🇬</span>
+              <div>
+                <div class="port-label">Lagos · Calabar · Port-Harcourt · Onne · Escravos · Warri</div>
+                <div class="port-sub">Nigeria</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="port-badge branch">Bureau régional</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="port-flag-name">
+              <span class="port-flag">🇧🇯</span>
+              <div>
+                <div class="port-label">Port de Cotonou</div>
+                <div class="port-sub">Bénin</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="port-badge branch">Bureau local</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="port-flag-name">
+              <span class="port-flag">🇬🇭</span>
+              <div>
+                <div class="port-label">Tema · Takoradi</div>
+                <div class="port-sub">Ghana</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="port-badge branch">Bureau local</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="port-flag-name">
+              <span class="port-flag">🇨🇲</span>
+              <div>
+                <div class="port-label">Douala · Kribi</div>
+                <div class="port-sub">Cameroun</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="port-badge branch">Bureau local</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="port-flag-name">
+              <span class="port-flag">🇨🇮</span>
+              <div>
+                <div class="port-label">Port d'Abidjan</div>
+                <div class="port-sub">Côte d'Ivoire</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="port-badge branch">Bureau local</span></td>
+        </tr>
       </tbody>
     </table>
     <div class="ports-numbers">
-      <div class="port-big-number">
+      <div class="ports-big-stat">
         <strong>10+</strong>
         <p>Ports actifs en Afrique de l'Ouest</p>
       </div>
-      <div class="port-mini-grid">
-        <div class="port-mini-cell"><strong>6</strong><span>Pays</span></div>
-        <div class="port-mini-cell"><strong>1</strong><span>Siège Lomé</span></div>
-        <div class="port-mini-cell"><strong>5</strong><span>Bureaux locaux</span></div>
-        <div class="port-mini-cell"><strong>24/7</strong><span>Disponibilité</span></div>
+      <div class="ports-mini-grid">
+        <div class="ports-mini-cell"><strong>6</strong><span>Pays</span></div>
+        <div class="ports-mini-cell"><strong>1</strong><span>Siège Lomé</span></div>
+        <div class="ports-mini-cell"><strong>5</strong><span>Bureaux locaux</span></div>
+        <div class="ports-mini-cell"><strong>24/7</strong><span>Disponibilité</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── COMMENT ÇA MARCHE ─── -->
-<section id="how">
-  <p class="label-tag">Processus simple</p>
-  <h2 class="section-h">Comment nous travaillons</h2>
-  <div class="how-steps">
+<!-- ══════════════════════════════════════
+     COMMENT ÇA MARCHE
+══════════════════════════════════════ -->
+<section id="how" class="section section-white">
+  <div class="section-header">
+    <p class="section-tag">Processus simple</p>
+    <h2 class="section-title">Comment nous travaillons</h2>
+    <p class="section-subtitle">Un processus en 4 étapes pour répondre à vos besoins dans les meilleurs délais.</p>
+  </div>
+  <div class="how-grid">
     <div class="how-step">
-      <div class="how-step-num">01</div>
+      <div class="how-num">01</div>
       <h3>Créez votre compte navire</h3>
-      <p>Inscrivez votre navire avec son IMO, votre compagnie et vos contacts. Validation rapide par notre équipe.</p>
+      <p>Inscrivez votre navire avec son numéro IMO, votre compagnie et vos contacts. Validation rapide par notre équipe.</p>
     </div>
     <div class="how-step">
-      <div class="how-step-num">02</div>
+      <div class="how-num">02</div>
       <h3>Consultez le catalogue tarifé</h3>
       <p>Accédez à l'intégralité de notre catalogue avec prix. Réservé aux clients navires validés.</p>
     </div>
     <div class="how-step">
-      <div class="how-step-num">03</div>
-      <h3>Passez commande</h3>
+      <div class="how-num">03</div>
+      <h3>Passez votre commande</h3>
       <p>En ligne, par email ou WhatsApp. Nos agents traitent votre commande immédiatement.</p>
     </div>
     <div class="how-step">
-      <div class="how-step-num">04</div>
+      <div class="how-num">04</div>
       <h3>Livraison & documentation</h3>
       <p>Livraison au mouillage ou à quai. Devis PDF, bon de commande et facture proforma automatiques.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── CONTACT ─── -->
-<section id="contact">
-  <p class="label-tag">Demande de devis</p>
-  <h2 class="section-h">Contactez-nous</h2>
-  <div class="contact-grid">
-    <div class="contact-aside">
-      <div class="avail-badge">Disponible 24h/24 · 7j/7</div>
+<!-- ══════════════════════════════════════
+     CONTACT
+══════════════════════════════════════ -->
+<section id="contact" class="section section-light">
+  <div class="section-header">
+    <p class="section-tag">Nous contacter</p>
+    <h2 class="section-title">Demande de devis<br/>ou d'information</h2>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-info">
+      <div class="availability-tag">Disponible 24h/24 · 7j/7</div>
       <h3>Lome Marine Supplier Global</h3>
-      <div class="contact-detail">
-        <div class="cd-label">Siège</div>
+      <div class="contact-item">
+        <div class="contact-item-label">Siège</div>
         <p>Port de Lomé, Togo</p>
       </div>
-      <div class="contact-detail">
-        <div class="cd-label">Services</div>
-        <p>Ship Chandling · Provisions · Safety · Bunker · Services techniques</p>
+      <div class="contact-item">
+        <div class="contact-item-label">Services</div>
+        <p>Ship Chandling · Provisions · Safety Equipment · Bunker · Services techniques</p>
       </div>
-      <div class="contact-detail">
-        <div class="cd-label">Zone de couverture</div>
+      <div class="contact-item">
+        <div class="contact-item-label">Zone de couverture</div>
         <p>Togo · Nigeria · Bénin · Ghana · Cameroun · Côte d'Ivoire</p>
       </div>
-      <div class="contact-detail">
-        <div class="cd-label">Pour les navires</div>
-        <p>Créez votre espace navire pour accéder aux prix et passer commande en ligne.</p>
+      <div class="contact-item">
+        <div class="contact-item-label">Pour les navires</div>
+        <p>Créez votre espace navire pour accéder aux prix et passer commande directement en ligne.</p>
       </div>
       <br/>
-      <a href="pages/register.html" class="btn-cta-p">Créer un compte navire →</a>
+      <a href="pages/register.html" class="btn-hero-primary" style="display:inline-flex;">Créer un compte navire →</a>
     </div>
     <div class="contact-form-box">
       <h3>Formulaire de demande</h3>
@@ -266,19 +426,24 @@
         </div>
         <div class="form-group">
           <label>Message / Détails</label>
-          <textarea placeholder="Décrivez vos besoins, quantités, date d'escale..."></textarea>
+          <textarea placeholder="Décrivez vos besoins, quantités estimées, date d'escale..."></textarea>
         </div>
-        <button type="submit" class="btn-send">Envoyer la demande</button>
+        <button type="submit" class="btn-submit">Envoyer la demande</button>
       </form>
     </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
-<footer>
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer class="footer">
   <div class="footer-grid">
     <div class="footer-brand">
-      <span class="nav-logo">LOME <span>MARINE</span></span>
+      <div class="navbar-logo" style="margin-bottom:1rem;">
+        <div class="logo-icon">⚓</div>
+        <span class="logo-text">Lome <span>Marine</span></span>
+      </div>
       <p>Ship chandler spécialisé en Afrique de l'Ouest depuis 2023. Approvisionnement complet, services techniques et équipements de sécurité pour tous types de navires.</p>
     </div>
     <div class="footer-col">
@@ -312,8 +477,8 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 Lome Marine Supplier Global — Lomé, Togo</span>
-    <span>Tous droits réservés</span>
+    <p>© 2024 Lome Marine Supplier Global — Lomé, Togo</p>
+    <p>Tous droits réservés</p>
   </div>
 </footer>
 
