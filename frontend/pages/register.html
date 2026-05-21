@@ -4,14 +4,114 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inscription — Lome Marine Supplier Global</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* Logo visible sur fond sombre */
+    .reg-brand-logo .anchor-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--sea) 100%);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .reg-brand-logo .brand-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem; font-weight: 800;
+      color: #ffffff !important;
+      letter-spacing: 0.04em;
+    }
+    .reg-brand-logo .brand-name .brand-accent { color: var(--teal-bright) !important; }
+
+    /* Badge obligatoire */
+    .doc-required-badge {
+      display: inline-flex; align-items: center;
+      font-size: 0.68rem; font-weight: 700;
+      color: var(--coral);
+      background: rgba(224,123,84,0.1);
+      border: 1px solid rgba(224,123,84,0.25);
+      padding: 0.15rem 0.55rem; border-radius: 10px;
+      margin-left: 0.5rem; vertical-align: middle;
+    }
+
+    /* Champ invalide */
+    .reg-field input.field-invalid,
+    .reg-field select.field-invalid {
+      border-color: var(--coral) !important;
+      box-shadow: 0 0 0 3px rgba(224,123,84,0.12) !important;
+    }
+    .field-error-msg {
+      display: block;
+      color: var(--coral);
+      font-size: 0.75rem;
+      margin-top: 0.3rem;
+    }
+
+    /* Zone document en erreur */
+    .reg-doc-zone.doc-error {
+      border-color: var(--coral) !important;
+      background: rgba(224,123,84,0.04) !important;
+      animation: docShake 0.4s ease;
+    }
+    @keyframes docShake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-4px); }
+      75%      { transform: translateX(4px); }
+    }
+
+    /* Alerte documents manquants */
+    .reg-doc-alert {
+      display: none;
+      padding: 0.8rem 1rem;
+      background: rgba(224,123,84,0.1);
+      border: 1px solid rgba(224,123,84,0.3);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem; color: var(--coral);
+      margin-bottom: 1rem; font-weight: 500;
+    }
+    .reg-doc-alert.show { display: block; }
+
+    /* Info validation admin */
+    .reg-pending-info {
+      background: rgba(14,127,116,0.06);
+      border: 1px solid rgba(14,127,116,0.2);
+      border-radius: var(--radius-sm);
+      padding: 0.8rem 1rem;
+      font-size: 0.82rem; color: var(--teal);
+      line-height: 1.6; margin-bottom: 1.5rem;
+    }
+
+    /* Bouton toggle mot de passe — sobre et professionnel */
+    .toggle-pwd {
+      position: absolute;
+      right: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-mid);
+      transition: color 0.2s;
+      line-height: 1;
+    }
+    .toggle-pwd:hover { color: var(--navy); }
+    /* Icône SVG oeil — remplace l'emoji */
+    .toggle-pwd svg { width: 16px; height: 16px; display: block; }
+
+    /* Input number sans flèches */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+
+    /* CGU erreur */
+    .terms-error { color: var(--coral) !important; }
+  </style>
 </head>
 <body class="register-page">
 
-  <!-- Fond animé vagues -->
   <div class="reg-bg">
     <div class="reg-wave reg-wave-1"></div>
     <div class="reg-wave reg-wave-2"></div>
@@ -20,17 +120,17 @@
 
   <div class="reg-wrapper">
 
-    <!-- Panneau gauche — Branding -->
+    <!-- Panneau gauche -->
     <aside class="reg-brand">
       <a href="../index.html" class="reg-back">← Retour à l'accueil</a>
 
       <div class="reg-brand-logo">
         <span class="anchor-icon">⚓</span>
-        <span>LOME MARINE</span>
+        <span class="brand-name">LOME <span class="brand-accent">MARINE</span></span>
       </div>
 
       <h2 class="reg-brand-title">Rejoignez notre réseau portuaire</h2>
-      <p class="reg-brand-sub" style="color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.75; margin-bottom: 2rem;">
+      <p class="reg-brand-sub">
         Accédez au catalogue tarifé complet, passez vos commandes en ligne et bénéficiez d'un suivi en temps réel depuis n'importe quel port d'Afrique de l'Ouest.
       </p>
 
@@ -43,17 +143,17 @@
           </div>
         </li>
         <li>
+          <span class="reg-feat-icon">⛽</span>
+          <div>
+            <strong>Bunker 24h/24</strong>
+            <p>Nominations acceptées à toute heure, peu importe le fuseau horaire.</p>
+          </div>
+        </li>
+        <li>
           <span class="reg-feat-icon">📦</span>
           <div>
             <strong>Commandes en ligne</strong>
             <p>Passez et suivez vos commandes de provision & bonded store 24h/24.</p>
-          </div>
-        </li>
-        <li>
-          <span class="reg-feat-icon">📍</span>
-          <div>
-            <strong>Multi-ports</strong>
-            <p>Lomé, Cotonou, Lagos, Tema, Douala, Abidjan — livraison garantie.</p>
           </div>
         </li>
         <li>
@@ -70,83 +170,94 @@
       </div>
     </aside>
 
-    <!-- Panneau droit — Formulaire -->
+    <!-- Panneau droit -->
     <main class="reg-form-panel">
       <div class="reg-form-header">
         <h1>Créer un compte</h1>
-        <p>Remplissez les informations de votre navire ou de votre agence</p>
+        <p>Tous les champs marqués * sont obligatoires</p>
       </div>
 
-      <!-- Onglets type de compte -->
+      <div class="reg-pending-info">
+        🔐 Après soumission, votre demande sera examinée par l'administrateur Lome Marine.
+        Vous recevrez un e-mail de confirmation dès que votre compte sera activé.
+        La connexion ne sera possible qu'après cette validation.
+      </div>
+
       <div class="reg-tabs">
         <button class="reg-tab active" onclick="switchRegTab(this, 'vessel')">🚢 Navire</button>
         <button class="reg-tab" onclick="switchRegTab(this, 'agent')">🏢 Agent / Société</button>
       </div>
 
-      <!-- Étapes -->
       <div class="reg-steps">
-        <div class="reg-step active" data-step="1">
-          <span>1</span><p>Identification</p>
-        </div>
+        <div class="reg-step active" data-step="1"><span>1</span><p>Identification</p></div>
         <div class="reg-step-line"></div>
-        <div class="reg-step" data-step="2">
-          <span>2</span><p>Navire / Société</p>
-        </div>
+        <div class="reg-step" data-step="2"><span>2</span><p>Navire / Société</p></div>
         <div class="reg-step-line"></div>
-        <div class="reg-step" data-step="3">
-          <span>3</span><p>Documents</p>
-        </div>
+        <div class="reg-step" data-step="3"><span>3</span><p>Documents</p></div>
       </div>
 
       <form class="reg-form" id="registerForm" novalidate>
 
-        <!-- ÉTAPE 1 — Identification -->
+        <!-- ══ ÉTAPE 1 — Identification ══ -->
         <div class="reg-step-content active" id="step1">
+
           <div class="reg-field-group">
             <div class="reg-field">
               <label for="firstName">Prénom *</label>
-              <input type="text" id="firstName" name="firstName" placeholder="Jean" required />
+              <input type="text" id="firstName" name="firstName" placeholder="Votre prénom" autocomplete="given-name" />
             </div>
             <div class="reg-field">
               <label for="lastName">Nom *</label>
-              <input type="text" id="lastName" name="lastName" placeholder="Dupont" required />
+              <input type="text" id="lastName" name="lastName" placeholder="Votre nom de famille" autocomplete="family-name" />
             </div>
           </div>
+
           <div class="reg-field">
             <label for="regEmail">Adresse e-mail *</label>
-            <input type="email" id="regEmail" name="email" placeholder="capitaine@navire.com" required />
+            <input type="email" id="regEmail" name="email" placeholder="email@exemple.com" autocomplete="email" />
           </div>
+
           <div class="reg-field">
             <label for="regPhone">Téléphone / WhatsApp *</label>
-            <input type="tel" id="regPhone" name="phone" placeholder="+228 XX XX XX XX" required />
+            <input type="tel" id="regPhone" name="phone" placeholder="+228 XX XX XX XX" autocomplete="tel" />
           </div>
+
           <div class="reg-field-group">
             <div class="reg-field">
-              <label for="regPassword">Mot de passe *</label>
+              <label for="regPassword">Mot de passe * <small style="font-weight:400;text-transform:none;">(min. 6 caractères)</small></label>
               <div class="reg-input-icon">
-                <input type="password" id="regPassword" name="password" placeholder="••••••••" required />
-                <button type="button" class="toggle-pwd" onclick="togglePassword('regPassword', this)">👁</button>
+                <input type="password" id="regPassword" name="password" placeholder="••••••••" autocomplete="new-password" />
+                <button type="button" class="toggle-pwd" id="btnTogglePwd1" aria-label="Afficher le mot de passe">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
               </div>
-              <div class="pwd-strength" id="pwdStrength">
-                <div class="pwd-bar" id="pwdBar"></div>
-              </div>
+              <div class="pwd-strength"><div class="pwd-bar" id="pwdBar"></div></div>
               <small class="pwd-label" id="pwdLabel"></small>
             </div>
             <div class="reg-field">
-              <label for="regConfirm">Confirmer *</label>
+              <label for="regConfirm">Confirmer le mot de passe *</label>
               <div class="reg-input-icon">
-                <input type="password" id="regConfirm" name="confirm" placeholder="••••••••" required />
-                <button type="button" class="toggle-pwd" onclick="togglePassword('regConfirm', this)">👁</button>
+                <input type="password" id="regConfirm" name="confirm" placeholder="••••••••" autocomplete="new-password" />
+                <button type="button" class="toggle-pwd" id="btnTogglePwd2" aria-label="Afficher le mot de passe">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
+
           <button type="button" class="reg-btn-next" onclick="goStep(2)">Suivant →</button>
         </div>
 
-        <!-- ÉTAPE 2 — Navire ou Société -->
+        <!-- ══ ÉTAPE 2 — Navire ou Société ══ -->
         <div class="reg-step-content" id="step2">
 
-          <!-- Onglet Navire -->
+          <!-- Champs Navire -->
           <div id="vesselFields">
             <div class="reg-field-group">
               <div class="reg-field">
@@ -185,12 +296,16 @@
               </div>
               <div class="reg-field">
                 <label for="grossTonnage">Jauge brute (GT)</label>
-                <input type="number" id="grossTonnage" name="grossTonnage" placeholder="15000" />
+                <!-- min="1" interdit 0 et négatif ; type text + pattern pour contrôle total -->
+                <input type="number" id="grossTonnage" name="grossTonnage"
+                       placeholder="15000" min="1" step="1"
+                       onkeydown="return event.key !== '-' && event.key !== 'e'"
+                       oninput="if(this.value < 1 && this.value !== '') this.value = 1;" />
               </div>
             </div>
           </div>
 
-          <!-- Onglet Agent/Société -->
+          <!-- Champs Agent/Société -->
           <div id="agentFields" class="hidden">
             <div class="reg-field">
               <label for="companyName">Raison sociale *</label>
@@ -212,35 +327,21 @@
             </div>
           </div>
 
-          <!-- Port principal -->
+          <!-- Port principal — commun -->
           <div class="reg-field">
             <label for="homePort">Port principal d'escale *</label>
             <select id="homePort" name="homePort">
               <option value="">Sélectionner un port…</option>
-              <optgroup label="🇹🇬 Togo">
-                <option>Lomé</option>
-              </optgroup>
+              <optgroup label="🇹🇬 Togo"><option>Lomé</option></optgroup>
               <optgroup label="🇳🇬 Nigeria">
-                <option>Lagos</option>
-                <option>Port-Harcourt</option>
-                <option>Onne</option>
-                <option>Calabar</option>
+                <option>Lagos</option><option>Port-Harcourt</option>
+                <option>Onne</option><option>Calabar</option>
                 <option>Warri / Escravos</option>
               </optgroup>
-              <optgroup label="🇧🇯 Bénin">
-                <option>Cotonou</option>
-              </optgroup>
-              <optgroup label="🇬🇭 Ghana">
-                <option>Tema</option>
-                <option>Takoradi</option>
-              </optgroup>
-              <optgroup label="🇨🇲 Cameroun">
-                <option>Douala</option>
-                <option>Kribi</option>
-              </optgroup>
-              <optgroup label="🇨🇮 Côte d'Ivoire">
-                <option>Abidjan</option>
-              </optgroup>
+              <optgroup label="🇧🇯 Bénin"><option>Cotonou</option></optgroup>
+              <optgroup label="🇬🇭 Ghana"><option>Tema</option><option>Takoradi</option></optgroup>
+              <optgroup label="🇨🇲 Cameroun"><option>Douala</option><option>Kribi</option></optgroup>
+              <optgroup label="🇨🇮 Côte d'Ivoire"><option>Abidjan</option></optgroup>
             </select>
           </div>
 
@@ -250,37 +351,69 @@
           </div>
         </div>
 
-        <!-- ÉTAPE 3 — Documents -->
+        <!-- ══ ÉTAPE 3 — Documents ══ -->
         <div class="reg-step-content" id="step3">
+
           <p class="reg-doc-intro">
-            Pour valider votre compte, veuillez joindre les documents requis. Les formats acceptés sont PDF, JPG, PNG (max 5 Mo chacun).
+            Pour valider votre compte, vous devez joindre <strong>tous les documents obligatoires</strong>.
+            La demande ne sera pas envoyée si un document manque.
+            Formats acceptés : PDF, JPG, PNG (max 5 Mo chacun).
           </p>
 
+          <div class="reg-doc-alert" id="docAlert">
+            ⚠️ Veuillez téléverser tous les documents obligatoires avant de soumettre votre demande.
+          </div>
+
+          <!-- Document 1 — Obligatoire -->
           <div class="reg-doc-zone" id="dropDoc1" onclick="document.getElementById('docCertificle').click()">
-            <input type="file" id="docCertificle" name="docCertificle" accept=".pdf,.jpg,.png" class="hidden" onchange="showFileName(this, 'label1')" />
+            <input type="file" id="docCertificle" name="docCertificle"
+                   accept=".pdf,.jpg,.png" class="hidden"
+                   onchange="trackDoc(this,'label1','dropDoc1','docCertificle')" />
             <span class="doc-icon">📄</span>
-            <p><strong>Certificat d'immatriculation / Acte de constitution</strong></p>
-            <small id="label1">Glissez votre fichier ici ou cliquez pour parcourir</small>
+            <div style="flex:1">
+              <p>
+                <strong>Certificat d'immatriculation / Acte de constitution</strong>
+                <span class="doc-required-badge">Obligatoire</span>
+              </p>
+              <small id="label1">Glissez votre fichier ici ou cliquez pour parcourir</small>
+            </div>
           </div>
 
+          <!-- Document 2 — Obligatoire -->
           <div class="reg-doc-zone" id="dropDoc2" onclick="document.getElementById('docID').click()">
-            <input type="file" id="docID" name="docID" accept=".pdf,.jpg,.png" class="hidden" onchange="showFileName(this, 'label2')" />
+            <input type="file" id="docID" name="docID"
+                   accept=".pdf,.jpg,.png" class="hidden"
+                   onchange="trackDoc(this,'label2','dropDoc2','docID')" />
             <span class="doc-icon">🪪</span>
-            <p><strong>Pièce d'identité du responsable</strong></p>
-            <small id="label2">Glissez votre fichier ici ou cliquez pour parcourir</small>
+            <div style="flex:1">
+              <p>
+                <strong>Pièce d'identité du responsable</strong>
+                <span class="doc-required-badge">Obligatoire</span>
+              </p>
+              <small id="label2">Glissez votre fichier ici ou cliquez pour parcourir</small>
+            </div>
           </div>
 
+          <!-- Document 3 — Optionnel -->
           <div class="reg-doc-zone optional" id="dropDoc3" onclick="document.getElementById('docOther').click()">
-            <input type="file" id="docOther" name="docOther" accept=".pdf,.jpg,.png" class="hidden" onchange="showFileName(this, 'label3')" />
+            <input type="file" id="docOther" name="docOther"
+                   accept=".pdf,.jpg,.png" class="hidden"
+                   onchange="trackDoc(this,'label3','dropDoc3',null)" />
             <span class="doc-icon">📋</span>
-            <p><strong>Document supplémentaire</strong> <span class="badge-opt">Optionnel</span></p>
-            <small id="label3">Glissez votre fichier ici ou cliquez pour parcourir</small>
+            <div style="flex:1">
+              <p>
+                <strong>Document supplémentaire</strong>
+                <span class="badge-opt">Optionnel</span>
+              </p>
+              <small id="label3">Licence d'agent, lettre de mandat, acte de constitution…</small>
+            </div>
           </div>
 
           <div class="reg-field reg-checkbox-field">
-            <label class="reg-checkbox-label">
-              <input type="checkbox" id="acceptTerms" name="acceptTerms" required />
-              <span>J'accepte les <a href="#" target="_blank">conditions générales d'utilisation</a> et la <a href="#" target="_blank">politique de confidentialité</a> de Lome Marine Supplier Global.</span>
+            <label class="reg-checkbox-label" id="termsLabel">
+              <input type="checkbox" id="acceptTerms" name="acceptTerms" />
+              <span>J'accepte les <a href="#" target="_blank">conditions générales d'utilisation</a>
+              et la <a href="#" target="_blank">politique de confidentialité</a> de Lome Marine Supplier Global.</span>
             </label>
           </div>
 
@@ -295,17 +428,324 @@
 
       </form>
 
-      <!-- Succès -->
+      <!-- Message succès -->
       <div class="reg-success hidden" id="regSuccess">
         <div class="success-icon">⚓</div>
         <h2>Demande envoyée !</h2>
-        <p>Notre équipe examinera votre dossier et activera votre compte sous <strong>24 heures</strong>. Vous recevrez un e-mail de confirmation.</p>
-        <a href="login.html" class="reg-btn-next" style="display:inline-block; margin-top: 1.5rem;">Se connecter</a>
+        <p>
+          Notre équipe examinera votre dossier et activera votre compte sous <strong>24 heures</strong>.<br/>
+          <strong>Vous ne pourrez vous connecter qu'après validation par l'administrateur.</strong><br/>
+          Un e-mail de confirmation vous sera envoyé à l'adresse renseignée.
+        </p>
+        <a href="login.html" class="reg-btn-next" style="display:inline-block;margin-top:1.5rem;">Retour à la connexion</a>
       </div>
 
     </main>
   </div>
 
   <script src="../js/main.js"></script>
+
+  <script>
+  // ═══════════════════════════════════════════════════════
+  //  TOGGLE MOT DE PASSE — attaché via addEventListener
+  //  (évite tout conflit avec main.js)
+  // ═══════════════════════════════════════════════════════
+  (function() {
+    var EYE_OPEN = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    var EYE_SHUT = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';
+
+    function bindToggle(btnId, inputId) {
+      var btn   = document.getElementById(btnId);
+      var input = document.getElementById(inputId);
+      if (!btn || !input) return;
+
+      // Supprimer tout onclick résiduel
+      btn.removeAttribute('onclick');
+
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var visible = (input.type === 'text');
+        input.type  = visible ? 'password' : 'text';
+        var svg = btn.querySelector('svg');
+        if (svg) svg.innerHTML = visible ? EYE_OPEN : EYE_SHUT;
+        btn.setAttribute('aria-label', visible ? 'Afficher le mot de passe' : 'Masquer le mot de passe');
+      });
+    }
+
+    // Attacher après chargement complet du DOM
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        bindToggle('btnTogglePwd1', 'regPassword');
+        bindToggle('btnTogglePwd2', 'regConfirm');
+      });
+    } else {
+      bindToggle('btnTogglePwd1', 'regPassword');
+      bindToggle('btnTogglePwd2', 'regConfirm');
+    }
+  })();
+
+  // ═══════════════════════════════════════════════════════
+  //  TRACKING DOCUMENTS OBLIGATOIRES
+  // ═══════════════════════════════════════════════════════
+  const requiredDocs = { docCertificle: false, docID: false };
+
+  window.trackDoc = function(input, labelId, zoneId, docKey) {
+    const label = document.getElementById(labelId);
+    const zone  = document.getElementById(zoneId);
+    if (input.files && input.files[0]) {
+      if (label) label.textContent = '✓ ' + input.files[0].name;
+      if (zone)  { zone.classList.add('uploaded'); zone.classList.remove('doc-error'); }
+      if (docKey && requiredDocs.hasOwnProperty(docKey)) requiredDocs[docKey] = true;
+      document.getElementById('docAlert').classList.remove('show');
+    }
+  };
+
+  document.querySelectorAll('.reg-doc-zone').forEach(zone => {
+    zone.addEventListener('click', () => zone.classList.remove('doc-error'));
+  });
+
+  // ═══════════════════════════════════════════════════════
+  //  UTILITAIRE : marquer un champ invalide
+  // ═══════════════════════════════════════════════════════
+  function markInvalid(el, msg) {
+    // Nettoyer ancien message
+    const parent = el.closest('.reg-input-icon')
+      ? el.closest('.reg-input-icon').parentElement
+      : el.parentElement;
+    const old = parent.querySelector('.field-error-msg');
+    if (old) old.remove();
+
+    el.classList.add('field-invalid');
+
+    const err = document.createElement('small');
+    err.className   = 'field-error-msg';
+    err.textContent = msg;
+    parent.appendChild(err);
+
+    el.focus();
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Auto-effacement
+    const clear = () => {
+      el.classList.remove('field-invalid');
+      if (err.parentNode) err.remove();
+      el.removeEventListener('input',  clear);
+      el.removeEventListener('change', clear);
+    };
+    el.addEventListener('input',  clear);
+    el.addEventListener('change', clear);
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  VALIDATION ÉTAPE 1
+  // ═══════════════════════════════════════════════════════
+  function validateStep1() {
+    const firstName = document.getElementById('firstName');
+    const lastName  = document.getElementById('lastName');
+    const email     = document.getElementById('regEmail');
+    const phone     = document.getElementById('regPhone');
+    const pwd       = document.getElementById('regPassword');
+    const confirm   = document.getElementById('regConfirm');
+
+    if (!firstName.value.trim()) {
+      markInvalid(firstName, 'Veuillez saisir votre prénom.'); return false;
+    }
+    if (!lastName.value.trim()) {
+      markInvalid(lastName, 'Veuillez saisir votre nom.'); return false;
+    }
+    const emailVal = email.value.trim();
+    if (!emailVal || !emailVal.includes('@') || emailVal.indexOf('.', emailVal.indexOf('@')) === -1) {
+      markInvalid(email, 'Veuillez saisir une adresse e-mail valide.'); return false;
+    }
+    if (!phone.value.trim()) {
+      markInvalid(phone, 'Veuillez saisir votre numéro de téléphone.'); return false;
+    }
+    if (pwd.value.length < 6) {
+      markInvalid(pwd, 'Le mot de passe doit contenir au moins 6 caractères.'); return false;
+    }
+    if (!confirm.value || confirm.value !== pwd.value) {
+      markInvalid(confirm, 'Les mots de passe ne correspondent pas.'); return false;
+    }
+    return true;
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  VALIDATION ÉTAPE 2
+  // ═══════════════════════════════════════════════════════
+  function validateStep2() {
+    const isAgent = !document.getElementById('agentFields').classList.contains('hidden');
+    const homePort = document.getElementById('homePort');
+
+    if (!isAgent) {
+      const vesselName = document.getElementById('vesselName');
+      const imoNumber  = document.getElementById('imoNumber');
+      const vesselType = document.getElementById('vesselType');
+      const vesselFlag = document.getElementById('vesselFlag');
+
+      if (!vesselName.value.trim()) { markInvalid(vesselName, 'Veuillez saisir le nom du navire.'); return false; }
+      if (!imoNumber.value.trim())  { markInvalid(imoNumber,  'Veuillez saisir le numéro IMO.'); return false; }
+      if (!vesselType.value)        { markInvalid(vesselType, 'Veuillez sélectionner le type de navire.'); return false; }
+      if (!vesselFlag.value.trim()) { markInvalid(vesselFlag, 'Veuillez saisir le pavillon.'); return false; }
+
+      // Jauge brute : si renseignée, doit être > 0
+      const gt = document.getElementById('grossTonnage');
+      if (gt.value !== '' && (isNaN(parseInt(gt.value)) || parseInt(gt.value) < 1)) {
+        markInvalid(gt, 'La jauge brute doit être un nombre positif.'); return false;
+      }
+    } else {
+      const companyName    = document.getElementById('companyName');
+      const regNumber      = document.getElementById('regNumber');
+      const country        = document.getElementById('country');
+      const companyAddress = document.getElementById('companyAddress');
+
+      if (!companyName.value.trim())    { markInvalid(companyName,    'Veuillez saisir la raison sociale.'); return false; }
+      if (!regNumber.value.trim())      { markInvalid(regNumber,      'Veuillez saisir le numéro RCCM.'); return false; }
+      if (!country.value.trim())        { markInvalid(country,        "Veuillez saisir le pays d'immatriculation."); return false; }
+      if (!companyAddress.value.trim()) { markInvalid(companyAddress, "Veuillez saisir l'adresse complète."); return false; }
+    }
+
+    if (!homePort.value) { markInvalid(homePort, "Veuillez sélectionner un port d'escale."); return false; }
+    return true;
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  NAVIGATION ENTRE ÉTAPES avec validation stricte
+  // ═══════════════════════════════════════════════════════
+  let currentRegStep = 1;
+
+  window.goStep = function(targetStep) {
+    // Valider l'étape courante avant d'avancer
+    if (targetStep > currentRegStep) {
+      if (currentRegStep === 1 && !validateStep1()) return;
+      if (currentRegStep === 2 && !validateStep2()) return;
+    }
+
+    // Mettre à jour les contenus
+    document.querySelectorAll('.reg-step-content').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('step' + targetStep);
+    if (target) target.classList.add('active');
+
+    // Mettre à jour les indicateurs
+    document.querySelectorAll('.reg-step').forEach((el, i) => {
+      el.classList.remove('active', 'done');
+      if (i + 1 < targetStep)      el.classList.add('done');
+      else if (i + 1 === targetStep) el.classList.add('active');
+    });
+
+    currentRegStep = targetStep;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Exposer pour main.js si nécessaire
+  window.validateRegStep = function(step) {
+    if (step === 1) return validateStep1();
+    if (step === 2) return validateStep2();
+    return true;
+  };
+
+  // Exposer switchRegTab si main.js ne la définit pas encore
+  window.switchRegTab = window.switchRegTab || function(btn, type) {
+    document.querySelectorAll('.reg-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const vesselFields = document.getElementById('vesselFields');
+    const agentFields  = document.getElementById('agentFields');
+    if (!vesselFields || !agentFields) return;
+    if (type === 'vessel') {
+      vesselFields.classList.remove('hidden');
+      agentFields.classList.add('hidden');
+    } else {
+      vesselFields.classList.add('hidden');
+      agentFields.classList.remove('hidden');
+    }
+  };
+
+  // ═══════════════════════════════════════════════════════
+  //  SOUMISSION FINALE — validation complète bloquante
+  // ═══════════════════════════════════════════════════════
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Toujours bloquer l'envoi natif
+
+    // 1. Revalider étape 1
+    if (!validateStep1()) {
+      goStep(1);
+      return;
+    }
+
+    // 2. Revalider étape 2
+    if (!validateStep2()) {
+      goStep(2);
+      return;
+    }
+
+    // 3. Documents obligatoires
+    let docsOk = true;
+    if (!requiredDocs.docCertificle) {
+      document.getElementById('dropDoc1').classList.add('doc-error');
+      docsOk = false;
+    }
+    if (!requiredDocs.docID) {
+      document.getElementById('dropDoc2').classList.add('doc-error');
+      docsOk = false;
+    }
+    if (!docsOk) {
+      const docAlert = document.getElementById('docAlert');
+      docAlert.classList.add('show');
+      docAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // 4. CGU
+    const terms      = document.getElementById('acceptTerms');
+    const termsLabel = document.getElementById('termsLabel');
+    if (!terms.checked) {
+      termsLabel.classList.add('terms-error');
+      termsLabel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      terms.addEventListener('change', function onCheck() {
+        termsLabel.classList.remove('terms-error');
+        terms.removeEventListener('change', onCheck);
+      });
+      return;
+    }
+
+    // ✅ Tout est valide — lancer l'envoi
+    const btn  = document.getElementById('submitBtn');
+    const text = document.getElementById('submitText');
+    const spin = document.getElementById('submitSpinner');
+    btn.disabled = true;
+    text.classList.add('hidden');
+    spin.classList.remove('hidden');
+
+    // Simulation — à remplacer par fetch() vers API PHP
+    setTimeout(() => {
+      document.getElementById('registerForm').classList.add('hidden');
+      document.getElementById('regSuccess').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 1800);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  //  FORCE MOT DE PASSE
+  // ═══════════════════════════════════════════════════════
+  document.getElementById('regPassword').addEventListener('input', function() {
+    const val = this.value;
+    const bar = document.getElementById('pwdBar');
+    const lbl = document.getElementById('pwdLabel');
+    if (!bar || !lbl) return;
+    let score = 0;
+    if (val.length >= 6)          score++;
+    if (val.length >= 10)         score++;
+    if (/[A-Z]/.test(val))        score++;
+    if (/[0-9]/.test(val))        score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    const widths = ['0%','20%','45%','65%','85%','100%'];
+    const colors = ['','#e07b54','#e8a838','#e8a838','#1abc9c','#0e7f74'];
+    const labels = ['','Très faible','Faible','Moyen','Fort','Très fort'];
+    bar.style.width      = widths[score];
+    bar.style.background = colors[score];
+    lbl.textContent      = labels[score];
+  });
+  </script>
+
 </body>
 </html>

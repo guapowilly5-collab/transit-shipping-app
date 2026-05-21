@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catalogue — Lome Marine Supplier Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/catalogue.css" />
+</head>
+<body class="cat-body">
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <a href="../index.html" class="navbar-logo">
+      <div class="logo-icon">⚓</div>
+      <span class="logo-text">Lome <span>Marine</span></span>
+    </a>
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../index.html#ports">Ports</a></li>
+      <li><a href="catalogue-public.html" class="active-link">Catalogue</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="nav-hamburger" id="hamburger">&#9776;</button>
+      <a href="login.html" class="btn-ghost">Connexion</a>
+      <a href="register.html" class="btn-primary">Espace navire</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO CATALOGUE ── -->
+  <div class="cat-hero">
+    <div class="cat-hero-bg"></div>
+    <div class="cat-hero-content">
+      <div class="cat-hero-badge">
+        <span class="cat-hero-badge-dot"></span>
+        <span>Catalogue produits & services</span>
+      </div>
+      <h1>Nos produits & services</h1>
+      <p>Découvrez l'ensemble de notre catalogue. Connectez-vous ou créez un compte navire pour accéder aux prix et passer commande en ligne.</p>
+      <div class="cat-hero-actions">
+        <a href="login.html" class="btn-hero-primary">Voir les prix →</a>
+        <a href="register.html" class="btn-hero-secondary">Créer un compte navire</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BANDEAU PRIX MASQUÉS ── -->
+  <div class="cat-price-banner">
+    <div class="cat-price-banner-icon">🔒</div>
+    <div>
+      <strong>Les prix sont réservés aux clients navires validés</strong>
+      <p>Connectez-vous ou créez un compte pour accéder aux tarifs et passer commande en ligne.</p>
+    </div>
+    <div class="cat-price-banner-actions">
+      <a href="login.html" class="cat-btn-login">Se connecter</a>
+      <a href="register.html" class="cat-btn-register">Créer un compte</a>
+    </div>
+  </div>
+
+  <!-- ── CONTENU CATALOGUE ── -->
+  <div class="cat-layout">
+
+    <!-- Sidebar filtres -->
+    <aside class="cat-sidebar">
+      <div class="cat-sidebar-header">
+        <h2>Catégories</h2>
+        <span class="cat-count" id="totalCount">8 catégories</span>
+      </div>
+      <nav class="cat-filters">
+        <button class="cat-filter active" data-cat="all">
+          <span class="cat-filter-icon">🗂️</span>
+          <span>Tout afficher</span>
+          <span class="cat-filter-badge">8</span>
+        </button>
+        <button class="cat-filter" data-cat="provisions">
+          <span class="cat-filter-icon">🍱</span>
+          <span>Provisions</span>
+          <span class="cat-filter-badge">5</span>
+        </button>
+        <button class="cat-filter" data-cat="bonded">
+          <span class="cat-filter-icon">🍾</span>
+          <span>Bonded Stores</span>
+          <span class="cat-filter-badge">4</span>
+        </button>
+        <button class="cat-filter" data-cat="deck">
+          <span class="cat-filter-icon">⚙️</span>
+          <span>Deck / Engine / Electrical</span>
+          <span class="cat-filter-badge">6</span>
+        </button>
+        <button class="cat-filter" data-cat="cabin">
+          <span class="cat-filter-icon">🛏️</span>
+          <span>Cabin / Salon Stores</span>
+          <span class="cat-filter-badge">5</span>
+        </button>
+        <button class="cat-filter" data-cat="safety">
+          <span class="cat-filter-icon">🦺</span>
+          <span>Safety Equipment</span>
+          <span class="cat-filter-badge">4</span>
+        </button>
+        <button class="cat-filter" data-cat="bunker">
+          <span class="cat-filter-icon">⛽</span>
+          <span>Bunker Supply</span>
+          <span class="cat-filter-badge">3</span>
+        </button>
+        <button class="cat-filter" data-cat="antipiracy">
+          <span class="cat-filter-icon">🛡️</span>
+          <span>Anti-Piracy</span>
+          <span class="cat-filter-badge">2</span>
+        </button>
+        <button class="cat-filter" data-cat="special">
+          <span class="cat-filter-icon">🔧</span>
+          <span>Services spéciaux</span>
+          <span class="cat-filter-badge">4</span>
+        </button>
+      </nav>
+
+      <div class="cat-sidebar-cta">
+        <p>Accédez aux prix et commandez en ligne</p>
+        <a href="register.html" class="cat-sidebar-btn">Créer un compte navire</a>
+      </div>
+    </aside>
+
+    <!-- Grille produits -->
+    <main class="cat-main">
+
+      <!-- Barre de recherche -->
+      <div class="cat-topbar">
+        <div class="cat-search-wrap">
+          <span class="cat-search-icon">🔍</span>
+          <input type="text" class="cat-search" id="catSearch" placeholder="Rechercher un produit ou service…" />
+        </div>
+        <div class="cat-topbar-right">
+          <span class="cat-results-count" id="resultsCount">Affichage de 33 produits</span>
+        </div>
+      </div>
+
+      <!-- Grille -->
+      <div class="cat-grid" id="catGrid">
+
+        <!-- ── PROVISIONS ── -->
+        <div class="cat-section" data-cat="provisions">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🍱</span>
+            <h2>Provisions</h2>
+            <span class="cat-section-badge">Fresh · Frozen · Dry</span>
+          </div>
+          <div class="cat-cards">
+            <div class="cat-card" data-name="Fresh & Frozen Products">
+              <div class="cat-card-icon">🥩</div>
+              <div class="cat-card-info">
+                <h3>Fresh & Frozen Products</h3>
+                <p>Viandes, poissons, fruits de mer, légumes frais et surgelés pour l'équipage.</p>
+                <div class="cat-card-tags"><span>Fresh</span><span>Frozen</span><span>Local & Import</span></div>
+              </div>
+              <div class="cat-card-price-lock">
+                <span>🔒</span>
+                <span>Prix sur compte</span>
+              </div>
+            </div>
+            <div class="cat-card" data-name="Dairy & Bakery Products">
+              <div class="cat-card-icon">🥛</div>
+              <div class="cat-card-info">
+                <h3>Dairy & Bakery Products</h3>
+                <p>Produits laitiers frais et longue conservation, pain frais, viennoiseries.</p>
+                <div class="cat-card-tags"><span>Dairy</span><span>Fresh Bread</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Dry Provisions">
+              <div class="cat-card-icon">🌾</div>
+              <div class="cat-card-info">
+                <h3>Dry Provisions</h3>
+                <p>Céréales, riz, pâtes, conserves, biscuits, noix, jus de fruits.</p>
+                <div class="cat-card-tags"><span>Cereals</span><span>Canned</span><span>Biscuits</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Meat & Poultry">
+              <div class="cat-card-icon">🍗</div>
+              <div class="cat-card-info">
+                <h3>Meat & Poultry</h3>
+                <p>Viandes fraîches et surgelées, charcuteries, fast food products.</p>
+                <div class="cat-card-tags"><span>Fresh Meat</span><span>Cold Cuts</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Fruits & Vegetables">
+              <div class="cat-card-icon">🥦</div>
+              <div class="cat-card-info">
+                <h3>Fruits & Vegetables</h3>
+                <p>Fruits et légumes frais et en conserve, locaux et importés.</p>
+                <div class="cat-card-tags"><span>Fresh</span><span>Canned</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── BONDED STORES ── -->
+        <div class="cat-section" data-cat="bonded">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🍾</span>
+            <h2>Bonded Stores</h2>
+            <span class="cat-section-badge">Duty Free · Franchise douanière</span>
+          </div>
+          <div class="cat-cards">
+            <div class="cat-card" data-name="Spirits & Wines">
+              <div class="cat-card-icon">🥃</div>
+              <div class="cat-card-info">
+                <h3>Spirits & Wines</h3>
+                <p>Liqueurs, spiritueux, vins de table, champagnes.</p>
+                <div class="cat-card-tags"><span>Duty Free</span><span>Spirits</span><span>Wines</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Beer & Soft Drinks">
+              <div class="cat-card-icon">🍺</div>
+              <div class="cat-card-info">
+                <h3>Beer & Soft Drinks</h3>
+                <p>Bières nationales et internationales, sodas, eaux minérales.</p>
+                <div class="cat-card-tags"><span>Beer</span><span>Mineral Water</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Tobacco & Cigarettes">
+              <div class="cat-card-icon">🚬</div>
+              <div class="cat-card-info">
+                <h3>Tobacco & Cigarettes</h3>
+                <p>Cigarettes et produits du tabac en franchise douanière.</p>
+                <div class="cat-card-tags"><span>Duty Free</span><span>Tobacco</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Chocolates & Confectionery">
+              <div class="cat-card-icon">🍫</div>
+              <div class="cat-card-info">
+                <h3>Chocolates & Confectionery</h3>
+                <p>Chocolats, bonbons, desserts, parfums et articles de confort.</p>
+                <div class="cat-card-tags"><span>Chocolates</span><span>Perfumes</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── DECK / ENGINE ── -->
+        <div class="cat-section" data-cat="deck">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">⚙️</span>
+            <h2>Deck / Engine / Electrical Spares</h2>
+            <span class="cat-section-badge">ISSA · IMPA</span>
+          </div>
+          <div class="cat-cards">
+            <div class="cat-card" data-name="Mooring & Towing Equipment">
+              <div class="cat-card-icon">⛓️</div>
+              <div class="cat-card-info">
+                <h3>Mooring & Towing Equipment</h3>
+                <p>Cordes, câbles galvanisés, ancres, chaînes, shackles, équipements de laçage.</p>
+                <div class="cat-card-tags"><span>Ropes</span><span>Steel Wire</span><span>Anchors</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Marine Chemicals & Paints">
+              <div class="cat-card-icon">🧪</div>
+              <div class="cat-card-info">
+                <h3>Marine Chemicals & Paints</h3>
+                <p>Produits chimiques marins, peintures, matériaux de nettoyage des réservoirs.</p>
+                <div class="cat-card-tags"><span>Chemicals</span><span>Coating</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Tools & Measuring Instruments">
+              <div class="cat-card-icon">🔧</div>
+              <div class="cat-card-info">
+                <h3>Tools & Measuring Instruments</h3>
+                <p>Outils pneumatiques et électriques, instruments de mesure, outils de coupe.</p>
+                <div class="cat-card-tags"><span>Hand Tools</span><span>Pneumatic</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Valves & Pipes">
+              <div class="cat-card-icon">🔩</div>
+              <div class="cat-card-info">
+                <h3>Valves & Pipes</h3>
+                <p>Vannes industrielles, tubes acier carbone, raccords, joints d'étanchéité.</p>
+                <div class="cat-card-tags"><span>Valves</span><span>Pipes</span><span>Fittings</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Navigation & Electronics">
+              <div class="cat-card-icon">🧭</div>
+              <div class="cat-card-info">
+                <h3>Navigation & Electronics</h3>
+                <p>Équipements électroniques, cartes nautiques, publications, Walkie-Talkie.</p>
+                <div class="cat-card-tags"><span>Charts</span><span>Electronics</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Welding & Gases">
+              <div class="cat-card-icon">🔥</div>
+              <div class="cat-card-info">
+                <h3>Welding & Gases</h3>
+                <p>Équipements de soudage et découpe, gaz industriels, hoists.</p>
+                <div class="cat-card-tags"><span>Welding</span><span>Industrial Gas</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── CABIN / SALON ── -->
+        <div class="cat-section" data-cat="cabin">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🛏️</span>
+            <h2>Cabin / Salon Stores</h2>
+            <span class="cat-section-badge">Confort équipage</span>
+          </div>
+          <div class="cat-cards">
+            <div class="cat-card" data-name="Bed & Laundry Accessories">
+              <div class="cat-card-icon">🛏️</div>
+              <div class="cat-card-info">
+                <h3>Bed & Laundry Accessories</h3>
+                <p>Literie, accessoires de blanchisserie, serviettes, linge de table, rideaux.</p>
+                <div class="cat-card-tags"><span>Bedding</span><span>Linen</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Tableware & Kitchenware">
+              <div class="cat-card-icon">🍽️</div>
+              <div class="cat-card-info">
+                <h3>Tableware & Kitchenware</h3>
+                <p>Vaisselle, couverts, ustensiles de cuisine, casseroles, poêles.</p>
+                <div class="cat-card-tags"><span>Cutlery</span><span>Plates</span><span>Pots</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Cleaning Products">
+              <div class="cat-card-icon">🧹</div>
+              <div class="cat-card-info">
+                <h3>Cleaning Products</h3>
+                <p>Produits ménagers, équipements de nettoyage, sacs poubelle.</p>
+                <div class="cat-card-tags"><span>Cleaning</span><span>Hygiene</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Electrical Appliances">
+              <div class="cat-card-icon">🔌</div>
+              <div class="cat-card-info">
+                <h3>Electrical Appliances</h3>
+                <p>Appareils électroménagers, machines de cuisson, machines à laver.</p>
+                <div class="cat-card-tags"><span>Appliances</span><span>Cooking</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Office & Stationery">
+              <div class="cat-card-icon">📎</div>
+              <div class="cat-card-info">
+                <h3>Office & Stationery Supplies</h3>
+                <p>Fournitures de bureau, papiers, fournitures administratives à bord.</p>
+                <div class="cat-card-tags"><span>Stationery</span><span>Office</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SAFETY ── -->
+        <div class="cat-section" data-cat="safety">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🦺</span>
+            <h2>Safety Equipment</h2>
+            <span class="cat-section-badge">SOLAS · USCG · Lloyd's · ABS · DNV</span>
+          </div>
+          <div class="cat-cards">
+            <div class="cat-card" data-name="Life Saving Appliances">
+              <div class="cat-card-icon">🦺</div>
+              <div class="cat-card-info">
+                <h3>Life Saving Appliances</h3>
+                <p>Gilets de sauvetage gonflables, bouées, combinaisons d'immersion, radeaux.</p>
+                <div class="cat-card-tags"><span>SOLAS</span><span>Lifejackets</span><span>Liferafts</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Firefighting Equipment">
+              <div class="cat-card-icon">🧯</div>
+              <div class="cat-card-info">
+                <h3>Firefighting Equipment</h3>
+                <p>Extincteurs CO2/poudre/mousse, tuyaux, lances, tenues de pompier.</p>
+                <div class="cat-card-tags"><span>CO2</span><span>AFFF</span><span>Fire Hoses</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Breathing Apparatus & PPE">
+              <div class="cat-card-icon">😷</div>
+              <div class="cat-card-info">
+                <h3>Breathing Apparatus & PPE</h3>
+                <p>EEBD, appareils respiratoires, combinaisons chimiques, équipements de protection.</p>
+                <div class="cat-card-tags"><span>EEBD</span><span>PPE</span><span>Chemical Suits</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Pyrotechnics & Signals">
+              <div class="cat-card-icon">🚨</div>
+              <div class="cat-card-info">
+                <h3>Pyrotechnics & IMO Signals</h3>
+                <p>Fusées de détresse, signaux pyrotechniques, panneaux IMO.</p>
+                <div class="cat-card-tags"><span>Pyrotechnics</span><span>IMO Signs</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── BUNKER ── -->
+        <div class="cat-section" data-cat="bunker">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">⛽</span>
+            <h2>Bunker Supply</h2>
+            <span class="cat-section-badge">24h/24 · Tous ports</span>
+          </div>
+          <div class="cat-cards">
+            <div class="cat-card" data-name="Fuel Oils">
+              <div class="cat-card-icon">⛽</div>
+              <div class="cat-card-info">
+                <h3>Fuel Oils (HFO / MDO / MGO)</h3>
+                <p>Toutes grades de fuel oils. Nominations acceptées jour et nuit depuis n'importe quel fuseau horaire.</p>
+                <div class="cat-card-tags"><span>HFO</span><span>MDO</span><span>MGO</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Lubricating Oils">
+              <div class="cat-card-icon">🛢️</div>
+              <div class="cat-card-info">
+                <h3>Lubricating Oils (Luboils)</h3>
+                <p>Huiles lubrifiantes pour moteurs et machines marines, toutes viscosités.</p>
+                <div class="cat-card-tags"><span>Luboils</span><span>Marine Grade</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Garbage & Sludge Disposal">
+              <div class="cat-card-icon">♻️</div>
+              <div class="cat-card-info">
+                <h3>Garbage & Sludge Disposal</h3>
+                <p>Évacuation des déchets plastiques, alimentaires, boues d'huile à l'ancrage ou à quai.</p>
+                <div class="cat-card-tags"><span>Disposal</span><span>Environmental</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ANTI-PIRACY ── -->
+        <div class="cat-section" data-cat="antipiracy">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🛡️</span>
+            <h2>Anti-Piracy Equipment</h2>
+            <span class="cat-section-badge">Protection · Zones à risque</span>
+          </div>
+          <div class="cat-cards">
+            <div class="cat-card" data-name="Razor Wires">
+              <div class="cat-card-icon">🔱</div>
+              <div class="cat-card-info">
+                <h3>Razor Wires</h3>
+                <p>Fils barbelés rasoirs pour la protection périmétrique des navires en zones à risque.</p>
+                <div class="cat-card-tags"><span>Anti-Piracy</span><span>Security</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+            <div class="cat-card" data-name="Water Cannon">
+              <div class="cat-card-icon">💦</div>
+              <div class="cat-card-info">
+                <h3>Water Cannon</h3>
+                <p>Systèmes de canons à eau pour repousser les tentatives d'abordage.</p>
+                <div class="cat-card-tags"><span>Anti-Piracy</span><span>Defense</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Prix sur compte</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SERVICES SPÉCIAUX ── -->
+        <div class="cat-section" data-cat="special">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🔧</span>
+            <h2>Services spéciaux</h2>
+            <span class="cat-section-badge">Sur mesure · Devis requis</span>
+          </div>
+          <div class="cat-cards">
+            <div class="cat-card" data-name="Fumigation Services">
+              <div class="cat-card-icon">💨</div>
+              <div class="cat-card-info">
+                <h3>Fumigation Services</h3>
+                <p>Fumigation des cales, désinfection, traitement phytosanitaire, contrôle parasitaire.</p>
+                <div class="cat-card-tags"><span>Fumigation</span><span>ISPM 15</span><span>Biocide</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Devis sur mesure</span></div>
+            </div>
+            <div class="cat-card" data-name="Rental Services">
+              <div class="cat-card-icon">🏗️</div>
+              <div class="cat-card-info">
+                <h3>Rental Services</h3>
+                <p>Location de grues mobiles (10–500t), chariots élévateurs, générateurs, conteneurs.</p>
+                <div class="cat-card-tags"><span>Crane</span><span>Generator</span><span>Container</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Devis sur mesure</span></div>
+            </div>
+            <div class="cat-card" data-name="Underwater Cleaning & Inspection">
+              <div class="cat-card-icon">🌊</div>
+              <div class="cat-card-info">
+                <h3>Underwater Cleaning & Inspection</h3>
+                <p>Nettoyage de coque, inspection vidéo, réparations sous-marines, mesure d'épaisseur.</p>
+                <div class="cat-card-tags"><span>Hull Cleaning</span><span>Survey</span><span>Repair</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Devis sur mesure</span></div>
+            </div>
+            <div class="cat-card" data-name="Workshop & Technical Services">
+              <div class="cat-card-icon">🛠️</div>
+              <div class="cat-card-info">
+                <h3>Workshop & Technical Services</h3>
+                <p>Réfrigération, tests de cargo gear, réparations électriques, reconditionnement pièces.</p>
+                <div class="cat-card-tags"><span>Workshop</span><span>Repair</span><span>Technical</span></div>
+              </div>
+              <div class="cat-card-price-lock"><span>🔒</span><span>Devis sur mesure</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- fin cat-grid -->
+
+      <!-- Message aucun résultat -->
+      <div class="cat-no-results hidden" id="noResults">
+        <span>🔍</span>
+        <p>Aucun produit ne correspond à votre recherche.</p>
+        <button onclick="resetSearch()">Réinitialiser la recherche</button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── CTA BAS DE PAGE ── -->
+  <div class="cat-cta-bottom">
+    <div class="cat-cta-bottom-content">
+      <h2>Prêt à commander ?</h2>
+      <p>Créez votre espace navire gratuit pour accéder aux prix et passer commande en ligne depuis n'importe quel port.</p>
+      <div class="cat-cta-bottom-actions">
+        <a href="register.html" class="btn-hero-primary">Créer un compte navire →</a>
+        <a href="../index.html#contact" class="btn-hero-secondary">Demander un devis</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/catalogue.js"></script>
+</body>
+</html>

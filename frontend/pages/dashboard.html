@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Lome Marine Supplier Global</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dash-body">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="dash-sidebar-logo">
+      <div class="logo-icon">⚓</div>
+      <span class="logo-text">Lome <span>Marine</span></span>
+    </div>
+
+    <nav class="dash-nav">
+      <div class="dash-nav-group">
+        <span class="dash-nav-label" id="navGroupMain">Principal</span>
+        <a href="dashboard.html" class="dash-nav-link active">
+          <span class="dash-nav-icon">📊</span>
+          <span id="navDashboard">Tableau de bord</span>
+        </a>
+        <a href="catalogue.html" class="dash-nav-link">
+          <span class="dash-nav-icon">📦</span>
+          <span id="navCatalogue">Catalogue</span>
+        </a>
+        <a href="commandes.html" class="dash-nav-link">
+          <span class="dash-nav-icon">🛒</span>
+          <span id="navOrders">Mes commandes</span>
+          <span class="dash-nav-badge">3</span>
+        </a>
+        <a href="dossiers.html" class="dash-nav-link">
+          <span class="dash-nav-icon">📁</span>
+          <span id="navFolders">Mes dossiers</span>
+        </a>
+      </div>
+
+      <div class="dash-nav-group">
+        <span class="dash-nav-label" id="navGroupDocs">Documents</span>
+        <a href="documents.html" class="dash-nav-link">
+          <span class="dash-nav-icon">📄</span>
+          <span id="navDocuments">Mes documents</span>
+        </a>
+        <a href="factures.html" class="dash-nav-link">
+          <span class="dash-nav-icon">🧾</span>
+          <span id="navInvoices">Factures</span>
+        </a>
+      </div>
+
+      <div class="dash-nav-group">
+        <span class="dash-nav-label" id="navGroupAccount">Compte</span>
+        <a href="profil.html" class="dash-nav-link">
+          <span class="dash-nav-icon">👤</span>
+          <span id="navProfile">Mon profil</span>
+        </a>
+        <a href="notifications.html" class="dash-nav-link">
+          <span class="dash-nav-icon">🔔</span>
+          <span id="navNotifs">Notifications</span>
+          <span class="dash-nav-badge">2</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="dash-sidebar-footer">
+      <div class="dash-user-info">
+        <div class="dash-user-avatar">CM</div>
+        <div>
+          <div class="dash-user-name">Capitaine Martin</div>
+          <div class="dash-user-role">MV Atlantic Star</div>
+        </div>
+      </div>
+      <a href="login.html" class="dash-logout" id="dashLogout">⏻ Déconnexion</a>
+    </div>
+  </aside>
+
+  <!-- ══ CONTENU PRINCIPAL ══ -->
+  <main class="dash-main">
+
+    <!-- Header -->
+    <header class="dash-header">
+      <div class="dash-header-left">
+        <button class="dash-toggle-sidebar" id="dashToggle" onclick="toggleSidebar()">☰</button>
+        <div>
+          <h1 class="dash-page-title" id="dashPageTitle">Tableau de bord</h1>
+          <p class="dash-page-sub" id="dashPageSub">Bienvenue, Capitaine Martin · MV Atlantic Star · IMO 9876543</p>
+        </div>
+      </div>
+      <div class="dash-header-right">
+        <div class="dash-port-tag">
+          <span>📍</span>
+          <span>Port de Lomé</span>
+        </div>
+
+        <!-- Bouton Dark/Light mode -->
+        <button class="dash-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Changer le thème">🌙</button>
+
+        <!-- Bouton Langue FR/EN -->
+        <div class="dash-lang-wrapper">
+  <button class="dash-lang-btn" id="langBtn" onclick="toggleLangDropdown()">
+    <span class="lang-flag">🇫🇷</span> FR ▾
+  </button>
+  <div class="dash-lang-dropdown" id="langDropdown">
+    <button class="dash-lang-option active" data-lang="fr" onclick="setLang('fr')">
+      🇫🇷 Français
+    </button>
+    <button class="dash-lang-option" data-lang="en" onclick="setLang('en')">
+      🇬🇧 English
+    </button>
+  </div>
+</div>
+
+        <button class="dash-notif-btn" onclick="window.location.href='notifications.html'">
+          🔔 <span class="dash-notif-count">2</span>
+        </button>
+        <a href="catalogue.html" class="btn-hero-primary" style="font-size:0.82rem; padding:0.55rem 1.2rem;" id="dashNewOrder">
+          Nouvelle commande +
+        </a>
+      </div>
+    </header>
+
+    <!-- Contenu scrollable -->
+    <div class="dash-content">
+
+      <!-- Stats -->
+      <div class="dash-stats-grid">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(14,127,116,0.15),rgba(27,94,138,0.15));">🛒</div>
+          <div class="dash-stat-info">
+            <span class="dash-stat-label" id="statLabelOrders">Commandes en cours</span>
+            <strong class="dash-stat-value">3</strong>
+            <span class="dash-stat-trend up" id="statTrendOrders">+1 cette semaine</span>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(232,168,56,0.15),rgba(224,123,84,0.15));">📁</div>
+          <div class="dash-stat-info">
+            <span class="dash-stat-label" id="statLabelFolders">Dossiers ouverts</span>
+            <strong class="dash-stat-value">7</strong>
+            <span class="dash-stat-trend up" id="statTrendFolders">+2 ce mois</span>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(27,188,156,0.15),rgba(14,127,116,0.15));">📄</div>
+          <div class="dash-stat-info">
+            <span class="dash-stat-label" id="statLabelDocs">Documents générés</span>
+            <strong class="dash-stat-value">24</strong>
+            <span class="dash-stat-trend neutral" id="statTrendDocs">Ce mois</span>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(27,94,138,0.15),rgba(74,127,165,0.15));">⚓</div>
+          <div class="dash-stat-info">
+            <span class="dash-stat-label" id="statLabelNextPort">Prochaine escale</span>
+            <strong class="dash-stat-value" style="font-size:1rem;">Lagos</strong>
+            <span class="dash-stat-trend neutral" id="statTrendPort">Dans 3 jours</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grille principale -->
+      <div class="dash-grid">
+
+        <!-- Commandes récentes -->
+        <div class="dash-card dash-card-wide">
+          <div class="dash-card-header">
+            <h2 class="dash-card-title" id="cardTitleOrders">Commandes récentes</h2>
+            <a href="commandes.html" class="dash-card-link" id="cardLinkOrders">Voir tout →</a>
+          </div>
+          <div class="dash-table-wrap">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th id="colRef">Référence</th>
+                  <th id="colType">Type</th>
+                  <th id="colPort">Port</th>
+                  <th id="colDate">Date</th>
+                  <th id="colAmount">Montant</th>
+                  <th id="colStatus">Statut</th>
+                  <th id="colAction">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="dash-ref">LM-2024-0047</span></td>
+                  <td>Provisions</td>
+                  <td>🇹🇬 Lomé</td>
+                  <td>18 Mai 2024</td>
+                  <td>2 450 €</td>
+                  <td><span class="dash-badge dash-badge-progress">En cours</span></td>
+                  <td><button class="dash-btn-sm">Voir</button></td>
+                </tr>
+                <tr>
+                  <td><span class="dash-ref">LM-2024-0046</span></td>
+                  <td>Safety Equip.</td>
+                  <td>🇳🇬 Lagos</td>
+                  <td>15 Mai 2024</td>
+                  <td>8 200 €</td>
+                  <td><span class="dash-badge dash-badge-delivered">Livré</span></td>
+                  <td><button class="dash-btn-sm">Voir</button></td>
+                </tr>
+                <tr>
+                  <td><span class="dash-ref">LM-2024-0045</span></td>
+                  <td>Bunker</td>
+                  <td>🇬🇭 Tema</td>
+                  <td>10 Mai 2024</td>
+                  <td>15 800 €</td>
+                  <td><span class="dash-badge dash-badge-delivered">Livré</span></td>
+                  <td><button class="dash-btn-sm">Voir</button></td>
+                </tr>
+                <tr>
+                  <td><span class="dash-ref">LM-2024-0044</span></td>
+                  <td>Bonded Stores</td>
+                  <td>🇧🇯 Cotonou</td>
+                  <td>05 Mai 2024</td>
+                  <td>1 200 €</td>
+                  <td><span class="dash-badge dash-badge-pending">En attente</span></td>
+                  <td><button class="dash-btn-sm">Voir</button></td>
+                </tr>
+                <tr>
+                  <td><span class="dash-ref">LM-2024-0043</span></td>
+                  <td>Deck Stores</td>
+                  <td>🇨🇲 Douala</td>
+                  <td>01 Mai 2024</td>
+                  <td>3 750 €</td>
+                  <td><span class="dash-badge dash-badge-cancelled">Annulé</span></td>
+                  <td><button class="dash-btn-sm">Voir</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Graphique services -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h2 class="dash-card-title" id="cardTitleServices">Dépenses par service</h2>
+            <span class="dash-card-sub" id="cardSubServices">Ce mois</span>
+          </div>
+          <div class="dash-chart-wrap">
+            <canvas id="chartServices"></canvas>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h2 class="dash-card-title" id="cardTitleNotifs">Notifications</h2>
+            <a href="notifications.html" class="dash-card-link" id="cardLinkNotifs">Tout voir →</a>
+          </div>
+          <div class="dash-notifs">
+            <div class="dash-notif dash-notif-urgent">
+              <div class="dash-notif-icon">⚠️</div>
+              <div class="dash-notif-content">
+                <strong id="notif1Title">Document manquant</strong>
+                <p id="notif1Desc">Le certificat de jauge du dossier LM-2024-0047 est requis.</p>
+                <span class="dash-notif-time" id="notif1Time">Il y a 2h</span>
+              </div>
+            </div>
+            <div class="dash-notif">
+              <div class="dash-notif-icon">✅</div>
+              <div class="dash-notif-content">
+                <strong id="notif2Title">Commande livrée</strong>
+                <p id="notif2Desc">LM-2024-0046 — Safety Equipment livré à Lagos.</p>
+                <span class="dash-notif-time" id="notif2Time">Il y a 1 jour</span>
+              </div>
+            </div>
+            <div class="dash-notif">
+              <div class="dash-notif-icon">📄</div>
+              <div class="dash-notif-content">
+                <strong id="notif3Title">Facture disponible</strong>
+                <p id="notif3Desc">La facture de LM-2024-0045 est prête à télécharger.</p>
+                <span class="dash-notif-time" id="notif3Time">Il y a 3 jours</span>
+              </div>
+            </div>
+            <div class="dash-notif">
+              <div class="dash-notif-icon">🚢</div>
+              <div class="dash-notif-content">
+                <strong id="notif4Title">Escale confirmée</strong>
+                <p id="notif4Desc">Votre escale à Lagos est confirmée pour le 21 Mai.</p>
+                <span class="dash-notif-time" id="notif4Time">Il y a 4 jours</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Graphique mois -->
+        <div class="dash-card dash-card-wide">
+          <div class="dash-card-header">
+            <h2 class="dash-card-title" id="cardTitleMonths">Commandes par mois</h2>
+            <span class="dash-card-sub" id="cardSubMonths">6 derniers mois</span>
+          </div>
+          <div class="dash-chart-wrap">
+            <canvas id="chartMonths"></canvas>
+          </div>
+        </div>
+
+        <!-- Actions rapides -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h2 class="dash-card-title" id="cardTitleQuick">Actions rapides</h2>
+          </div>
+          <div class="dash-quick-actions">
+            <a href="catalogue.html" class="dash-quick-btn"><span>📦</span><span id="quick1">Commander provisions</span></a>
+            <a href="catalogue.html" class="dash-quick-btn"><span>⛽</span><span id="quick2">Demande bunker</span></a>
+            <a href="catalogue.html" class="dash-quick-btn"><span>🦺</span><span id="quick3">Safety Equipment</span></a>
+            <a href="catalogue.html" class="dash-quick-btn"><span>⚙️</span><span id="quick4">Pièces techniques</span></a>
+            <a href="documents.html" class="dash-quick-btn"><span>📄</span><span id="quick5">Télécharger B/L</span></a>
+            <a href="dossiers.html"  class="dash-quick-btn"><span>📁</span><span id="quick6">Ouvrir un dossier</span></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

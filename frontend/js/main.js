@@ -1,5 +1,5 @@
 // ══════════════════════════════════════
-//   LOME MARINE — main.js
+//   LOME MARINE — main.js  (version propre)
 // ══════════════════════════════════════
 
 // ─── NAVBAR : scroll effet ───
@@ -13,7 +13,6 @@ if (navbar) {
 // ─── NAVBAR : menu hamburger mobile ───
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
-
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('open');
@@ -34,12 +33,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// ─── FORMULAIRE CONTACT ───
+// ─── FORMULAIRE CONTACT (index.html) ───
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const btn = this.querySelector('.btn-submit');
+    if (!btn) return;
     btn.textContent = 'Message envoyé ✓';
     btn.style.background = 'linear-gradient(135deg, var(--teal), var(--sea))';
     btn.disabled = true;
@@ -52,281 +52,205 @@ if (contactForm) {
   });
 }
 
-// ─── PAGE LOGIN : onglets rôles ───
-window.setRole = function(btn, role) {
-  document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  const emailInput = document.getElementById('loginEmail');
-  if (emailInput) {
-    emailInput.placeholder = role === 'admin'
-      ? 'admin@lomemarine.com'
-      : 'email@exemple.com';
-  }
-};
-
-// ─── PAGE LOGIN : soumission formulaire ───
+// ─── PAGE LOGIN : soumission ───
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
   loginForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    const btn       = this.querySelector('.btn-login');
-    const alertBox  = document.getElementById('loginAlert');
-    const email     = document.getElementById('loginEmail').value.trim();
-    const password  = document.getElementById('loginPassword').value.trim();
+    const btn      = document.getElementById('loginBtn') || this.querySelector('.btn-login');
+    const alertBox = document.getElementById('loginAlert');
+    const email    = document.getElementById('loginEmail');
+    const password = document.getElementById('loginPassword');
 
-    if (!email || !password) {
-      if (alertBox) {
-        alertBox.textContent = 'Veuillez remplir tous les champs.';
-        alertBox.classList.add('show');
-      }
+    if (!email || !email.value.trim() || !password || !password.value.trim()) {
+      if (alertBox) { alertBox.textContent = 'Veuillez remplir tous les champs.'; alertBox.classList.add('show'); }
+      return;
+    }
+    if (!email.value.trim().includes('@')) {
+      if (alertBox) { alertBox.textContent = 'Veuillez saisir une adresse e-mail valide.'; alertBox.classList.add('show'); }
       return;
     }
 
-    btn.textContent = 'Connexion en cours...';
-    btn.disabled = true;
-    if (alertBox) alertBox.classList.remove('show');
+    if (btn)      { btn.textContent = 'Connexion en cours...'; btn.disabled = true; }
+    if (alertBox)   alertBox.classList.remove('show');
 
-    // Simulation — à remplacer par appel API PHP
+    // Simulation — à remplacer par fetch() vers API PHP
     setTimeout(() => {
-      btn.textContent = 'Se connecter';
-      btn.disabled = false;
-      // window.location.href = 'dashboard.html';
-    }, 2000);
+      if (btn) { btn.textContent = 'Se connecter'; btn.disabled = false; }
+      // Décommenter selon le rôle retourné par l'API :
+      // window.location.href = 'dashboard.html';    // client validé
+      // showPendingAlert();                          // client en attente
+    }, 1500);
   });
 }
 
-// ─── PAGE REGISTER : soumission formulaire ───
-const registerForm = document.getElementById('registerForm');
-if (registerForm) {
-  registerForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const btn      = this.querySelector('.btn-register');
-    const alertBox = document.getElementById('registerAlert');
+// ─── DASHBOARD : toggle sidebar mobile ───
+window.toggleSidebar = function() {
+  const sidebar = document.getElementById('dashSidebar');
+  if (sidebar) sidebar.classList.toggle('open');
+};
 
-    btn.textContent = 'Envoi en cours...';
-    btn.disabled = true;
-    if (alertBox) alertBox.classList.remove('show');
-
-    // Simulation — à remplacer par appel API PHP
-    setTimeout(() => {
-      btn.textContent = 'Demande envoyée ✓';
-      btn.style.background = 'linear-gradient(135deg, var(--teal), var(--sea))';
-      // window.location.href = 'login.html';
-    }, 2000);
-  });
-}// ─── PAGE REGISTER V2 : onglets type de compte ───
-window.switchRegTab = function(btn, type) {
-  document.querySelectorAll('.reg-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-
-  const vesselFields = document.getElementById('vesselFields');
-  const agentFields  = document.getElementById('agentFields');
-  if (!vesselFields || !agentFields) return;
-
-  if (type === 'vessel') {
-    vesselFields.classList.remove('hidden');
-    agentFields.classList.add('hidden');
+// ─── DASHBOARD : dark / light mode ───
+window.toggleTheme = function() {
+  const html   = document.documentElement;
+  const btn    = document.getElementById('themeBtn');
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  if (isDark) {
+    html.removeAttribute('data-theme');
+    localStorage.setItem('dash-theme', 'light');
+    if (btn) { btn.textContent = '🌙'; btn.title = 'Passer en mode sombre'; }
   } else {
-    vesselFields.classList.add('hidden');
-    agentFields.classList.remove('hidden');
+    html.setAttribute('data-theme', 'dark');
+    localStorage.setItem('dash-theme', 'dark');
+    if (btn) { btn.textContent = '☀️'; btn.title = 'Passer en mode clair'; }
   }
 };
 
-// ─── PAGE REGISTER V2 : navigation entre étapes ───
-let currentRegStep = 1;
-
-window.goStep = function(step) {
-  if (step > currentRegStep && !validateRegStep(currentRegStep)) return;
-
-  // Masquer l'étape actuelle, afficher la nouvelle
-  document.querySelectorAll('.reg-step-content').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById('step' + step);
-  if (target) target.classList.add('active');
-
-  // Mettre à jour les indicateurs d'étapes
-  document.querySelectorAll('.reg-step').forEach((el, i) => {
-    el.classList.remove('active', 'done');
-    if (i + 1 < step)       el.classList.add('done');
-    else if (i + 1 === step) el.classList.add('active');
-  });
-
-  currentRegStep = step;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-// ─── PAGE REGISTER V2 : validation par étape ───
-function validateRegStep(step) {
-  if (step === 1) {
-    const email   = document.getElementById('regEmail');
-    const pwd     = document.getElementById('regPassword');
-    const confirm = document.getElementById('regConfirm');
-
-    if (!email || !email.value.trim().includes('@')) {
-      highlightField(email, 'Veuillez entrer un e-mail valide.');
-      return false;
-    }
-    if (!pwd || pwd.value.length < 6) {
-      highlightField(pwd, 'Le mot de passe doit contenir au moins 6 caractères.');
-      return false;
-    }
-    if (!confirm || confirm.value !== pwd.value) {
-      highlightField(confirm, 'Les mots de passe ne correspondent pas.');
-      return false;
-    }
-  }
-
-  if (step === 2) {
-    const homePort = document.getElementById('homePort');
-    if (!homePort || !homePort.value) {
-      highlightField(homePort, "Veuillez sélectionner un port d'escale.");
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function highlightField(el, msg) {
-  if (!el) return;
-  el.style.borderColor = '#e07b54'; // var(--coral)
-  el.focus();
-
-  // Supprimer ancien message d'erreur si présent
-  const parent = el.closest('.reg-input-icon') || el.parentElement;
-  const existing = parent.parentElement.querySelector('.field-error');
-  if (existing) existing.remove();
-
-  const err = document.createElement('small');
-  err.className = 'field-error';
-  err.style.cssText = 'color:#e07b54; font-size:0.75rem; display:block; margin-top:0.3rem;';
-  err.textContent = msg;
-  parent.parentElement.appendChild(err);
-
-  setTimeout(() => {
-    el.style.borderColor = '';
-    err.remove();
-  }, 3000);
-}
-
-// ─── PAGE REGISTER V2 : toggle visibilité mot de passe ───
-window.togglePassword = function(id, btn) {
-  const input = document.getElementById(id);
-  if (!input) return;
-  if (input.type === 'password') {
-    input.type = 'text';
-    btn.textContent = '🙈';
+// Appliquer thème sauvegardé
+(function applyTheme() {
+  const saved = localStorage.getItem('dash-theme');
+  const btn   = document.getElementById('themeBtn');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    if (btn) { btn.textContent = '☀️'; btn.title = 'Passer en mode clair'; }
   } else {
-    input.type = 'password';
-    btn.textContent = '👁';
+    if (btn) { btn.textContent = '🌙'; btn.title = 'Passer en mode sombre'; }
+  }
+})();
+
+// ─── DASHBOARD : dropdown langue ───
+window.toggleLangDropdown = function() {
+  const dropdown = document.getElementById('langDropdown');
+  if (dropdown) dropdown.classList.toggle('open');
+};
+
+document.addEventListener('click', function(e) {
+  const wrapper = document.querySelector('.dash-lang-wrapper');
+  if (wrapper && !wrapper.contains(e.target)) {
+    const dropdown = document.getElementById('langDropdown');
+    if (dropdown) dropdown.classList.remove('open');
+  }
+});
+
+// ─── DASHBOARD : traductions FR/EN ───
+const translations = {
+  fr: {
+    pageTitle:'Tableau de bord', pageSub:'Bienvenue, Capitaine Martin · MV Atlantic Star · IMO 9876543',
+    newOrder:'Nouvelle commande +',
+    statsOrders:'Commandes en cours', statsFolders:'Dossiers ouverts',
+    statsDocs:'Documents générés',    statsNextPort:'Prochaine escale',
+    statsWeek:'+1 cette semaine',     statsMonth:'+2 ce mois',
+    statsThisMonth:'Ce mois',         statsDays:'Dans 3 jours',
+    recentOrders:'Commandes récentes', seeAll:'Voir tout →',
+    colRef:'Référence', colType:'Type', colPort:'Port', colDate:'Date',
+    colAmount:'Montant', colStatus:'Statut', colAction:'Action', btnSee:'Voir',
+    statusProgress:'En cours', statusDelivered:'Livré',
+    statusPending:'En attente',  statusCancelled:'Annulé',
+    chartServices:'Dépenses par service', chartThisMonth:'Ce mois',
+    chartMonths:'Commandes par mois',     chartLast6:'6 derniers mois',
+    notifications:'Notifications', seeAllNotif:'Tout voir →',
+    notif1Title:'Document manquant',  notif1Desc:'Le certificat de jauge du dossier LM-2024-0047 est requis.', notif1Time:'Il y a 2h',
+    notif2Title:'Commande livrée',    notif2Desc:'LM-2024-0046 — Safety Equipment livré à Lagos.',            notif2Time:'Il y a 1 jour',
+    notif3Title:'Facture disponible', notif3Desc:'La facture de LM-2024-0045 est prête à télécharger.',       notif3Time:'Il y a 3 jours',
+    notif4Title:'Escale confirmée',   notif4Desc:'Votre escale à Lagos est confirmée pour le 21 Mai.',        notif4Time:'Il y a 4 jours',
+    quickActions:'Actions rapides',
+    quick1:'Commander provisions', quick2:'Demande bunker',  quick3:'Safety Equipment',
+    quick4:'Pièces techniques',    quick5:'Télécharger B/L', quick6:'Ouvrir un dossier',
+    navDashboard:'Tableau de bord', navCatalogue:'Catalogue',     navOrders:'Mes commandes',
+    navFolders:'Mes dossiers',      navDocuments:'Mes documents', navInvoices:'Factures',
+    navProfile:'Mon profil',        navNotifs:'Notifications',
+    navGroupMain:'Principal',       navGroupDocs:'Documents',     navGroupAccount:'Compte',
+    logout:'⏻ Déconnexion',
+  },
+  en: {
+    pageTitle:'Dashboard', pageSub:'Welcome, Captain Martin · MV Atlantic Star · IMO 9876543',
+    newOrder:'New order +',
+    statsOrders:'Ongoing orders', statsFolders:'Open folders',
+    statsDocs:'Generated documents', statsNextPort:'Next port call',
+    statsWeek:'+1 this week',    statsMonth:'+2 this month',
+    statsThisMonth:'This month', statsDays:'In 3 days',
+    recentOrders:'Recent orders', seeAll:'See all →',
+    colRef:'Reference', colType:'Type', colPort:'Port', colDate:'Date',
+    colAmount:'Amount', colStatus:'Status', colAction:'Action', btnSee:'View',
+    statusProgress:'In progress', statusDelivered:'Delivered',
+    statusPending:'Pending',      statusCancelled:'Cancelled',
+    chartServices:'Spending by service', chartThisMonth:'This month',
+    chartMonths:'Orders per month',      chartLast6:'Last 6 months',
+    notifications:'Notifications', seeAllNotif:'See all →',
+    notif1Title:'Missing document',   notif1Desc:'The tonnage certificate for folder LM-2024-0047 is required.', notif1Time:'2 hours ago',
+    notif2Title:'Order delivered',    notif2Desc:'LM-2024-0046 — Safety Equipment delivered in Lagos.',           notif2Time:'1 day ago',
+    notif3Title:'Invoice available',  notif3Desc:'Invoice for LM-2024-0045 is ready to download.',                notif3Time:'3 days ago',
+    notif4Title:'Port call confirmed',notif4Desc:'Your port call in Lagos is confirmed for May 21st.',            notif4Time:'4 days ago',
+    quickActions:'Quick actions',
+    quick1:'Order provisions', quick2:'Bunker request', quick3:'Safety Equipment',
+    quick4:'Technical parts',  quick5:'Download B/L',   quick6:'Open a folder',
+    navDashboard:'Dashboard', navCatalogue:'Catalogue',    navOrders:'My orders',
+    navFolders:'My folders',  navDocuments:'My documents', navInvoices:'Invoices',
+    navProfile:'My profile',  navNotifs:'Notifications',
+    navGroupMain:'Main',      navGroupDocs:'Documents',    navGroupAccount:'Account',
+    logout:'⏻ Logout',
   }
 };
 
-// ─── PAGE REGISTER V2 : indicateur de force du mot de passe ───
-const regPwdInput = document.getElementById('regPassword');
-if (regPwdInput) {
-  regPwdInput.addEventListener('input', function() {
-    const val = this.value;
-    const bar = document.getElementById('pwdBar');
-    const lbl = document.getElementById('pwdLabel');
-    if (!bar || !lbl) return;
+let currentLang = localStorage.getItem('dash-lang') || 'fr';
 
-    let score = 0;
-    if (val.length >= 6)           score++;
-    if (val.length >= 10)          score++;
-    if (/[A-Z]/.test(val))         score++;
-    if (/[0-9]/.test(val))         score++;
-    if (/[^A-Za-z0-9]/.test(val)) score++;
+function setText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
 
-    const widths = ['0%', '20%', '45%', '65%', '85%', '100%'];
-    const colors = ['', '#e07b54', '#e8a838', '#e8a838', '#1abc9c', '#0e7f74'];
-    const labels = ['', 'Très faible', 'Faible', 'Moyen', 'Fort', 'Très fort'];
+function applyTranslations(lang) {
+  const t   = translations[lang];
+  const btn = document.getElementById('langBtn');
+  if (btn) btn.innerHTML = lang === 'fr'
+    ? '<span class="lang-flag">🇫🇷</span> FR ▾'
+    : '<span class="lang-flag">🇬🇧</span> EN ▾';
 
-    bar.style.width      = widths[score];
-    bar.style.background = colors[score];
-    lbl.textContent      = labels[score];
-  });
+  setText('dashPageTitle',t.pageTitle);  setText('dashPageSub',t.pageSub);    setText('dashNewOrder',t.newOrder);
+  setText('statLabelOrders',t.statsOrders); setText('statLabelFolders',t.statsFolders);
+  setText('statLabelDocs',t.statsDocs);     setText('statLabelNextPort',t.statsNextPort);
+  setText('statTrendOrders',t.statsWeek);   setText('statTrendFolders',t.statsMonth);
+  setText('statTrendDocs',t.statsThisMonth);setText('statTrendPort',t.statsDays);
+  setText('colRef',t.colRef); setText('colType',t.colType); setText('colPort',t.colPort);
+  setText('colDate',t.colDate); setText('colAmount',t.colAmount); setText('colStatus',t.colStatus);
+  setText('colAction',t.colAction);
+  setText('cardTitleOrders',t.recentOrders);  setText('cardLinkOrders',t.seeAll);
+  setText('cardTitleServices',t.chartServices); setText('cardSubServices',t.chartThisMonth);
+  setText('cardTitleNotifs',t.notifications);   setText('cardLinkNotifs',t.seeAllNotif);
+  setText('cardTitleMonths',t.chartMonths);     setText('cardSubMonths',t.chartLast6);
+  setText('cardTitleQuick',t.quickActions);
+  setText('notif1Title',t.notif1Title); setText('notif1Desc',t.notif1Desc); setText('notif1Time',t.notif1Time);
+  setText('notif2Title',t.notif2Title); setText('notif2Desc',t.notif2Desc); setText('notif2Time',t.notif2Time);
+  setText('notif3Title',t.notif3Title); setText('notif3Desc',t.notif3Desc); setText('notif3Time',t.notif3Time);
+  setText('notif4Title',t.notif4Title); setText('notif4Desc',t.notif4Desc); setText('notif4Time',t.notif4Time);
+  setText('quick1',t.quick1); setText('quick2',t.quick2); setText('quick3',t.quick3);
+  setText('quick4',t.quick4); setText('quick5',t.quick5); setText('quick6',t.quick6);
+  setText('navDashboard',t.navDashboard); setText('navCatalogue',t.navCatalogue);
+  setText('navOrders',t.navOrders);       setText('navFolders',t.navFolders);
+  setText('navDocuments',t.navDocuments); setText('navInvoices',t.navInvoices);
+  setText('navProfile',t.navProfile);     setText('navNotifs',t.navNotifs);
+  setText('navGroupMain',t.navGroupMain); setText('navGroupDocs',t.navGroupDocs);
+  setText('navGroupAccount',t.navGroupAccount); setText('dashLogout',t.logout);
+  document.querySelectorAll('.dash-badge-progress').forEach(el  => el.textContent = t.statusProgress);
+  document.querySelectorAll('.dash-badge-delivered').forEach(el => el.textContent = t.statusDelivered);
+  document.querySelectorAll('.dash-badge-pending').forEach(el   => el.textContent = t.statusPending);
+  document.querySelectorAll('.dash-badge-cancelled').forEach(el => el.textContent = t.statusCancelled);
+  document.querySelectorAll('.dash-btn-sm').forEach(el          => el.textContent = t.btnSee);
 }
 
-// ─── PAGE REGISTER V2 : affichage nom de fichier uploadé ───
-window.showFileName = function(input, labelId) {
-  const label = document.getElementById(labelId);
-  const zone  = input.closest('.reg-doc-zone');
-  if (input.files && input.files[0] && label) {
-    label.textContent = '✅ ' + input.files[0].name;
-    if (zone) zone.classList.add('uploaded');
-  }
-};
-
-// ─── PAGE REGISTER V2 : soumission finale ───
-const registerFormV2 = document.getElementById('registerForm');
-if (registerFormV2) {
-  registerFormV2.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const terms = document.getElementById('acceptTerms');
-    if (!terms || !terms.checked) {
-      alert("Veuillez accepter les conditions générales d'utilisation.");
-      return;
-    }
-
-    const submitBtn  = document.getElementById('submitBtn');
-    const submitText = document.getElementById('submitText');
-    const spinner    = document.getElementById('submitSpinner');
-
-    if (submitBtn) submitBtn.disabled = true;
-    if (submitText) submitText.classList.add('hidden');
-    if (spinner) spinner.classList.remove('hidden');
-
-    // Simulation envoi — à remplacer par fetch() vers l'API PHP
-    setTimeout(() => {
-      registerFormV2.classList.add('hidden');
-      const success = document.getElementById('regSuccess');
-      if (success) success.classList.remove('hidden');
-    }, 1800);
+window.setLang = function(lang) {
+  currentLang = lang;
+  localStorage.setItem('dash-lang', lang);
+  applyTranslations(lang);
+  document.querySelectorAll('.dash-lang-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.lang === lang);
   });
-}// ─── PAGE LOGIN : onglets rôles avec changement visuel ───
-window.setRole = function(btn, role) {
-  document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-
-  const emailInput    = document.getElementById('loginEmail');
-  const passwordInput = document.getElementById('loginPassword');
-  const loginBtn      = document.getElementById('loginBtn');
-  const roleLabel     = document.getElementById('roleLabel');
-  const formPanel     = document.querySelector('.login-form-panel');
-  const loginTitle    = document.querySelector('.login-form-panel h3');
-  const loginSub      = document.querySelector('.login-form-subtitle');
-
-  if (role === 'admin') {
-    // Changer les placeholders
-    if (emailInput)    emailInput.placeholder    = 'admin@lomemarine.com';
-    if (passwordInput) passwordInput.placeholder = 'Mot de passe admin';
-
-    // Changer le titre et sous-titre
-    if (loginTitle) loginTitle.textContent = 'Connexion';
-    if (loginSub)   loginSub.textContent   = 'Accès réservé au personnel autorisé';
-
-    // Changer le label du bouton
-    if (loginBtn) loginBtn.textContent = 'Accéder au back-office';
-
-    // Ajouter classe admin au panneau
-    if (formPanel) formPanel.classList.add('admin-mode');
-
-    // Changer le label du rôle si présent
-    if (roleLabel) roleLabel.textContent = 'Administration';
-
-  } else {
-    // Revenir à Navire / Agent
-    if (emailInput)    emailInput.placeholder    = 'email@exemple.com';
-    if (passwordInput) passwordInput.placeholder = '••••••••';
-
-    if (loginTitle) loginTitle.textContent = 'Connexion';
-    if (loginSub)   loginSub.textContent   = 'Accédez à votre espace personnel';
-
-    if (loginBtn) loginBtn.textContent = 'Se connecter';
-
-    if (formPanel) formPanel.classList.remove('admin-mode');
-
-    if (roleLabel) roleLabel.textContent = 'Navire / Agent';
-  }
+  const dropdown = document.getElementById('langDropdown');
+  if (dropdown) dropdown.classList.remove('open');
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+  const saved = localStorage.getItem('dash-lang') || 'fr';
+  currentLang = saved;
+  applyTranslations(saved);
+  document.querySelectorAll('.dash-lang-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.lang === saved);
+  });
+});
