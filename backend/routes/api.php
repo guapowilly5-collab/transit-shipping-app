@@ -5,13 +5,17 @@ require_once __DIR__ . '/../controllers/CategoryController.php';
 require_once __DIR__ . '/../controllers/ProductController.php';
 require_once __DIR__ . '/../controllers/NavireController.php';
 require_once __DIR__ . '/../controllers/OrderController.php';
+require_once __DIR__ . '/../controllers/DashboardController.php';
+require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../middlewares/auth.php';
 
-$auth    = new AuthController();
-$category = new CategoryController();
-$product  = new ProductController();
-$navire   = new NavireController();
-$order    = new OrderController();
+$auth      = new AuthController();
+$category  = new CategoryController();
+$product   = new ProductController();
+$navire    = new NavireController();
+$order     = new OrderController();
+$dashboard = new DashboardController();
+$user      = new UserController();
 
 // Récupérer la méthode HTTP et l'URL
 $method = $_SERVER['REQUEST_METHOD'];
@@ -101,6 +105,29 @@ if ($method === 'POST' && $uri === '/auth/inscription') {
 } elseif ($method === 'PUT' && $base === '/commandes' && $id) {
     $order->changerStatut($id);
 
+// ── ROUTES DASHBOARD ──────────────────────────────────────────────
+} elseif ($method === 'GET' && $uri === '/dashboard/stats') {
+    $dashboard->stats();
+
+// ── ROUTES USERS ──────────────────────────────────────────────────
+} elseif ($method === 'GET' && $uri === '/users') {
+    $user->lister();
+
+} elseif ($method === 'GET' && $uri === '/users/en-attente') {
+    $user->enAttente();
+
+} elseif ($method === 'GET' && $uri === '/users/profil') {
+    $user->monProfil();
+
+} elseif ($method === 'PUT' && $base === '/users' && $sub === '/valider') {
+    $user->valider($id);
+
+} elseif ($method === 'PUT' && $base === '/users' && $sub === '/suspendre') {
+    $user->suspendre($id);
+
+} elseif ($method === 'DELETE' && $base === '/users' && $id) {
+    $user->supprimer($id);
+
 // ── ROUTE PAR DÉFAUT ──────────────────────────────────────────────
 } else {
     echo json_encode([
@@ -114,6 +141,8 @@ if ($method === 'POST' && $uri === '/auth/inscription') {
             'PRODUITS'   => ['GET /produits', 'GET /produits/client', 'POST /produits', 'PUT /produits/:id', 'DELETE /produits/:id'],
             'NAVIRES'    => ['GET /navires', 'GET /navires/mon-navire', 'POST /navires', 'PUT /navires/:id', 'DELETE /navires/:id'],
             'COMMANDES'  => ['GET /commandes', 'GET /commandes/mes-commandes', 'GET /commandes/:id', 'POST /commandes/en-ligne', 'POST /commandes/agent', 'PUT /commandes/:id'],
+            'DASHBOARD'  => ['GET /dashboard/stats'],
+            'USERS'      => ['GET /users', 'GET /users/en-attente', 'GET /users/profil', 'PUT /users/:id/valider', 'PUT /users/:id/suspendre', 'DELETE /users/:id'],
         ]
     ]);
 }
