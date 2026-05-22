@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Passer la commande — Lome Marine Supplier Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    :root{--navy:#0b1f3a;--navy-soft:#132d4f;--sea:#1b5e8a;--teal:#0e7f74;--teal-bright:#1abc9c;--coral:#e07b54;--amber:#e8a838;--white:#ffffff;--salt:#f5f9fc;--mist:#e8f1f8;--gray-light:#dde6ee;--gray-mid:#7a96ad;--text:#1a2e3d;--text-soft:#4a6278;--text-muted:#8aabb7;--font-head:'Syne',sans-serif;--font-body:'Inter',sans-serif;--shadow-md:0 8px 24px rgba(11,31,58,0.12);--radius:10px;--radius-sm:6px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-body);color:var(--text);background:var(--salt);min-height:100vh;display:flex;flex-direction:column;}
+
+    /* Header */
+    .ord-header{background:var(--navy);padding:0 2.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(27,188,156,0.15);}
+    .ord-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+    .logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--teal),var(--sea));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+    .logo-text{font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--white);}
+    .logo-text span{color:var(--teal-bright);}
+    .btn-back{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-sm);color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:all .2s;text-decoration:none;}
+    .btn-back:hover{border-color:var(--teal-bright);color:var(--teal-bright);}
+
+    /* Steps */
+    .ord-steps{background:var(--white);border-bottom:1px solid var(--gray-light);padding:1.25rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:0;}
+    .step{display:flex;align-items:center;gap:.5rem;}
+    .step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:.78rem;font-weight:700;flex-shrink:0;transition:all .3s;}
+    .step.done .step-num{background:var(--teal);color:var(--white);}
+    .step.active .step-num{background:var(--sea);color:var(--white);}
+    .step.pending .step-num{background:var(--gray-light);color:var(--text-muted);}
+    .step-label{font-size:.78rem;font-weight:600;white-space:nowrap;}
+    .step.active .step-label{color:var(--navy);}
+    .step.done .step-label{color:var(--teal);}
+    .step.pending .step-label{color:var(--text-muted);}
+    .step-line{width:60px;height:1px;background:var(--gray-light);margin:0 .5rem;}
+
+    /* Layout */
+    .ord-layout{flex:1;display:grid;grid-template-columns:1fr 340px;gap:1.5rem;max-width:1060px;margin:2rem auto;padding:0 1.5rem;width:100%;align-items:start;}
+
+    /* Cards */
+    .card{background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem;}
+    .card:last-child{margin-bottom:0;}
+    .card-head{display:flex;align-items:flex-start;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid var(--gray-light);}
+    .card-title{font-family:var(--font-head);font-size:.95rem;font-weight:800;color:var(--navy);}
+    .card-sub{font-size:.78rem;color:var(--text-muted);margin-top:.15rem;}
+    .card-body{padding:1.25rem 1.5rem;}
+
+    /* Form */
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .form-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem;}
+    .form-group:last-child{margin-bottom:0;}
+    .form-group label{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);}
+    .form-group input,.form-group select,.form-group textarea{padding:.7rem .9rem;border:1.5px solid var(--gray-light);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.88rem;color:var(--text);background:var(--white);outline:none;transition:all .2s;width:100%;}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,127,116,.1);}
+    .form-group input[readonly]{background:var(--salt);color:var(--text-soft);}
+    .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6278' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;cursor:pointer;padding-right:2rem;}
+    .form-group textarea{resize:vertical;min-height:80px;}
+    .field-required{color:var(--coral);margin-left:.2rem;}
+
+    /* Récap section droite */
+    .recap-section-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.75rem;}
+    .recap-item{display:flex;justify-content:space-between;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid var(--gray-light);font-size:.85rem;gap:.75rem;}
+    .recap-item:last-child{border-bottom:none;}
+    .recap-item-name{color:var(--text);font-weight:500;flex:1;}
+    .recap-item-qty{font-size:.75rem;color:var(--text-muted);margin-top:.1rem;}
+    .recap-item-price{font-family:var(--font-head);font-weight:700;color:var(--navy);white-space:nowrap;}
+    .recap-divider{height:1px;background:var(--gray-light);margin:.9rem 0;}
+    .recap-total-row{display:flex;justify-content:space-between;align-items:center;font-size:.88rem;color:var(--text-soft);padding:.4rem 0;}
+    .recap-total-row.grand{font-size:1rem;font-weight:700;color:var(--navy);margin-top:.5rem;padding-top:1rem;border-top:1px solid var(--gray-light);}
+    .recap-total-row.grand .total-val{font-family:var(--font-head);font-size:1.35rem;font-weight:800;color:var(--navy);}
+    .recap-badge{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(14,127,116,.08);color:var(--teal);padding:.2rem .6rem;border-radius:10px;}
+
+    /* Bouton submit */
+    .btn-submit{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:1rem;background:linear-gradient(135deg,var(--navy),var(--navy-soft));color:var(--white);border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:1rem;}
+    .btn-submit:hover{background:linear-gradient(135deg,var(--teal),var(--sea));box-shadow:0 6px 20px rgba(14,127,116,.35);}
+    .submit-note{font-size:.75rem;color:var(--text-muted);text-align:center;margin-top:.6rem;line-height:1.55;}
+
+    /* Modale succès */
+    .modal-overlay{position:fixed;inset:0;background:rgba(11,31,58,.6);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s;}
+    .modal-overlay.show{opacity:1;pointer-events:all;}
+    .modal{background:var(--white);border-radius:var(--radius);padding:3rem 2.5rem;max-width:480px;width:100%;text-align:center;box-shadow:var(--shadow-md);}
+    .modal-icon{font-size:3rem;margin-bottom:1.25rem;}
+    .modal h2{font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--navy);margin-bottom:.75rem;}
+    .modal p{font-size:.9rem;color:var(--text-soft);line-height:1.7;margin-bottom:.5rem;}
+    .modal-ref{display:inline-block;margin:1rem 0;padding:.5rem 1.2rem;background:rgba(14,127,116,.08);border:1px solid rgba(14,127,116,.2);border-radius:var(--radius-sm);font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--teal);}
+    .btn-modal{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.5rem;background:linear-gradient(135deg,var(--teal),var(--sea));color:var(--white);border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;margin-top:1rem;transition:opacity .2s;text-decoration:none;}
+    .btn-modal:hover{opacity:.9;}
+
+    @media(max-width:900px){.ord-layout{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}}
+    @media(max-width:600px){.ord-layout{padding:0 1rem;margin:1rem auto;}.ord-header{padding:0 1rem;}.step-label{display:none;}.step-line{width:30px;}}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="ord-header">
+  <a href="../pages/catalogue.html" class="ord-logo">
+    <div class="logo-icon">⚓</div>
+    <span class="logo-text">Lome <span>Marine</span></span>
+  </a>
+  <a href="panier.html" class="btn-back">← Retour au panier</a>
+</header>
+
+<!-- STEPS -->
+<div class="ord-steps">
+  <div class="step done">
+    <div class="step-num">✓</div>
+    <div class="step-label">Panier</div>
+  </div>
+  <div class="step-line"></div>
+  <div class="step active">
+    <div class="step-num">2</div>
+    <div class="step-label">Commande</div>
+  </div>
+  <div class="step-line"></div>
+  <div class="step pending">
+    <div class="step-num">3</div>
+    <div class="step-label">Confirmation</div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="ord-layout">
+
+  <!-- COL GAUCHE : formulaire -->
+  <div>
+
+    <!-- Infos navire -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Informations navire</div>
+          <div class="card-sub">Pré-remplies depuis votre compte · Modifiables si nécessaire</div>
+        </div>
+        <span style="font-size:1.3rem;">🚢</span>
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nom du navire<span class="field-required">*</span></label>
+            <input type="text" value="MV Atlantic Star" readonly />
+          </div>
+          <div class="form-group">
+            <label>Numéro IMO<span class="field-required">*</span></label>
+            <input type="text" value="9234567" readonly />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Type de navire</label>
+            <input type="text" value="Bulk Carrier" readonly />
+          </div>
+          <div class="form-group">
+            <label>Pavillon</label>
+            <input type="text" value="Liberia" readonly />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Armateur / Agent<span class="field-required">*</span></label>
+            <input type="text" value="Atlantic Shipping Co." />
+          </div>
+          <div class="form-group">
+            <label>Email de contact<span class="field-required">*</span></label>
+            <input type="email" value="ops@atlanticship.com" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Infos livraison -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Détails de livraison</div>
+          <div class="card-sub">Où et quand livrer la commande ?</div>
+        </div>
+        <span style="font-size:1.3rem;">📍</span>
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Port de livraison<span class="field-required">*</span></label>
+            <select id="portSelect">
+              <option value="lome" selected>Port de Lomé — Togo</option>
+              <option value="lagos">Lagos — Nigeria</option>
+              <option value="cotonou">Cotonou — Bénin</option>
+              <option value="tema">Tema — Ghana</option>
+              <option value="douala">Douala — Cameroun</option>
+              <option value="abidjan">Abidjan — Côte d'Ivoire</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Position navire<span class="field-required">*</span></label>
+            <select>
+              <option value="quai">À quai</option>
+              <option value="ancrage">En anchorage</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Poste à quai / Bouée</label>
+            <input type="text" placeholder="Ex: Berth 7, Anchorage B…" />
+          </div>
+          <div class="form-group">
+            <label>Heure d'arrivée souhaitée (ETA)<span class="field-required">*</span></label>
+            <input type="datetime-local" id="etaInput" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Instructions de livraison spéciales</label>
+          <textarea placeholder="Horaires préférés, accès au navire, agent local à contacter, remarques…" id="delivNote"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode paiement -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Mode de règlement</div>
+          <div class="card-sub">Votre agent Lome Marine finalisera les modalités</div>
+        </div>
+        <span style="font-size:1.3rem;">💳</span>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Mode de règlement souhaité<span class="field-required">*</span></label>
+          <select id="payMode">
+            <option value="credit">Compte crédit (clients validés)</option>
+            <option value="cash">Cash to Master</option>
+            <option value="wire">Virement bancaire</option>
+            <option value="proforma">Sur facture proforma</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Référence bon de commande (optionnel)</label>
+          <input type="text" placeholder="Référence interne de votre société…" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COL DROITE : récap commande -->
+  <div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Récapitulatif commande</div>
+      </div>
+      <div class="card-body" id="recapBody">
+        <!-- Généré par JS -->
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODALE CONFIRMATION -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon">✅</div>
+    <h2>Commande confirmée !</h2>
+    <p>Votre commande a été transmise à nos agents à <strong>Lomé</strong>.</p>
+    <p>Un accusé de réception vous sera envoyé par email sous <strong>30 minutes</strong>.</p>
+    <div class="modal-ref" id="modalRef">LM-2025-00000</div>
+    <p style="font-size:.82rem;color:var(--text-muted);">Suivez l'avancement dans <strong>Mes commandes</strong>.</p>
+    <a href="mes-commandes.html" class="btn-modal">Voir mes commandes →</a>
+  </div>
+</div>
+
+<script>
+  var SAMPLE=[
+    {id:1,cat:'Provisions',emoji:'🥩',name:'Fresh & Frozen Products',price:180,unit:'kg',qty:50},
+    {id:2,cat:'Bonded Stores',emoji:'🥃',name:'Spirits & Wines',price:28,unit:'bouteille',qty:24},
+    {id:3,cat:'Safety Equipment',emoji:'🦺',name:'Gilets de sauvetage SOLAS',price:210,unit:'unité',qty:4},
+    {id:4,cat:'Deck / Engine',emoji:'⛓️',name:'Mooring & Towing Equipment',price:85,unit:'mètre',qty:100},
+  ];
+  var cart=JSON.parse(localStorage.getItem('lm_cart')||'null')||SAMPLE;
+  function fmt(n){return n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' $';}
+
+  function renderRecap(){
+    var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+    var html='<div class="recap-section-title">Articles ('+cart.length+' références)</div>';
+    html+=cart.map(function(item){
+      return '<div class="recap-item">'+
+        '<div><div class="recap-item-name">'+item.emoji+' '+item.name+'</div>'+
+        '<div class="recap-item-qty">'+item.qty+' '+item.unit+'</div></div>'+
+        '<div class="recap-item-price">'+fmt(item.price*item.qty)+'</div>'+
+      '</div>';
+    }).join('');
+    html+='<div class="recap-divider"></div>';
+    html+='<div class="recap-total-row"><span>Sous-total</span><span>'+fmt(total)+'</span></div>';
+    html+='<div class="recap-total-row"><span>Livraison à bord</span><span class="recap-badge">Sur devis</span></div>';
+    html+='<div class="recap-total-row"><span>Taxes</span><span class="recap-badge">À confirmer</span></div>';
+    html+='<div class="recap-total-row grand"><span>Total estimé</span><span class="total-val">'+fmt(total)+'</span></div>';
+    html+='<button class="btn-submit" onclick="submitOrder()">Confirmer la commande ✓</button>';
+    html+='<p class="submit-note">🔒 En confirmant, vous acceptez nos conditions générales de vente. Un agent vous contacte sous 2h.</p>';
+    document.getElementById('recapBody').innerHTML=html;
+  }
+
+  function submitOrder(){
+    var ref='LM-2025-'+Math.floor(Math.random()*90000+10000);
+    document.getElementById('modalRef').textContent=ref;
+    document.getElementById('modalOverlay').classList.add('show');
+    localStorage.removeItem('lm_cart');
+  }
+
+  // ETA default = demain
+  var eta=document.getElementById('etaInput');
+  if(eta){var d=new Date();d.setDate(d.getDate()+1);d.setHours(8,0);eta.value=d.toISOString().slice(0,16);}
+
+  renderRecap();
+</script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mes commandes — Lome Marine Supplier Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    :root{--navy:#0b1f3a;--navy-soft:#132d4f;--sea:#1b5e8a;--teal:#0e7f74;--teal-bright:#1abc9c;--coral:#e07b54;--amber:#e8a838;--steel:#4a7fa5;--white:#ffffff;--salt:#f5f9fc;--mist:#e8f1f8;--gray-light:#dde6ee;--text:#1a2e3d;--text-soft:#4a6278;--text-muted:#8aabb7;--font-head:'Syne',sans-serif;--font-body:'Inter',sans-serif;--shadow-sm:0 2px 8px rgba(11,31,58,0.08);--shadow-md:0 8px 24px rgba(11,31,58,0.12);--radius:10px;--radius-sm:6px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-body);color:var(--text);background:var(--salt);min-height:100vh;display:flex;}
+
+    /* ── Sidebar (même que dashboard) ── */
+    .dash-sidebar{width:260px;min-width:260px;background:var(--navy);border-right:1px solid rgba(27,188,156,.12);display:flex;flex-direction:column;height:100vh;position:sticky;top:0;overflow-y:auto;z-index:100;}
+    .dash-sidebar-logo{display:flex;align-items:center;gap:.6rem;padding:1.5rem 1.5rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06);}
+    .logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--teal),var(--sea));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+    .logo-text{font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--white);}
+    .logo-text span{color:var(--teal-bright);}
+    .dash-nav{padding:1.2rem .75rem;flex:1;display:flex;flex-direction:column;gap:1.5rem;}
+    .dash-nav-group{display:flex;flex-direction:column;gap:.2rem;}
+    .dash-nav-label{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:0 .75rem;margin-bottom:.3rem;}
+    .dash-nav-link{display:flex;align-items:center;gap:.75rem;padding:.65rem .75rem;border-radius:var(--radius-sm);font-size:.875rem;font-weight:500;color:rgba(255,255,255,.5);text-decoration:none;transition:all .2s;}
+    .dash-nav-link:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85);}
+    .dash-nav-link.active{background:linear-gradient(135deg,rgba(14,127,116,.2),rgba(27,94,138,.15));color:var(--white);border:1px solid rgba(27,188,156,.15);}
+    .dash-nav-icon{font-size:1rem;width:20px;text-align:center;}
+    .dash-nav-badge{margin-left:auto;background:var(--teal);color:var(--white);font-size:.68rem;font-weight:700;padding:.1rem .5rem;border-radius:10px;}
+    .dash-sidebar-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);}
+    .dash-user-info{display:flex;align-items:center;gap:.75rem;margin-bottom:.8rem;}
+    .dash-user-avatar{width:36px;height:36px;background:linear-gradient(135deg,var(--teal),var(--sea));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--white);}
+    .dash-user-name{font-size:.85rem;font-weight:600;color:var(--white);}
+    .dash-user-role{font-size:.72rem;color:rgba(255,255,255,.35);}
+    .dash-logout{display:block;font-size:.8rem;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;}
+    .dash-logout:hover{color:var(--coral);}
+
+    /* ── Main ── */
+    .dash-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
+    .dash-header{background:var(--white);border-bottom:1px solid var(--gray-light);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:50;}
+    .dash-header-left{display:flex;align-items:center;gap:1rem;}
+    .dash-page-title{font-family:var(--font-head);font-size:1.2rem;font-weight:800;color:var(--navy);margin:0;}
+    .dash-page-sub{font-size:.78rem;color:var(--text-muted);margin:0;}
+    .dash-header-right{display:flex;align-items:center;gap:.75rem;}
+    .dash-port-tag{display:flex;align-items:center;gap:.4rem;background:rgba(14,127,116,.08);border:1px solid rgba(14,127,116,.2);color:var(--teal);font-size:.8rem;font-weight:600;padding:.4rem .85rem;border-radius:20px;}
+    .btn-new-order{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1.1rem;background:linear-gradient(135deg,var(--teal),var(--sea));color:var(--white);border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.83rem;font-weight:600;cursor:pointer;transition:opacity .2s;text-decoration:none;}
+    .btn-new-order:hover{opacity:.9;}
+
+    /* ── Contenu ── */
+    .dash-content{flex:1;overflow-y:auto;padding:2rem;}
+
+    /* Stats */
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:1.5rem;}
+    .stat-card{background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;}
+    .stat-icon{width:44px;height:44px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+    .stat-val{font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--navy);line-height:1;margin:.2rem 0;}
+    .stat-label{font-size:.72rem;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.06em;}
+    .stat-trend{font-size:.72rem;font-weight:600;}
+    .trend-up{color:var(--teal);}
+    .trend-neutral{color:var(--text-muted);}
+
+    /* Filtres et recherche */
+    .filters-bar{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+    .search-wrap{flex:1;min-width:200px;position:relative;}
+    .search-icon{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.9rem;color:var(--text-muted);}
+    .search-input{width:100%;padding:.65rem 1rem .65rem 2.3rem;border:1.5px solid var(--gray-light);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.88rem;color:var(--text);background:var(--white);outline:none;transition:border-color .2s;}
+    .search-input:focus{border-color:var(--teal);}
+    .filter-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1rem;background:var(--white);border:1.5px solid var(--gray-light);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.82rem;font-weight:600;color:var(--text-soft);cursor:pointer;transition:all .2s;}
+    .filter-btn:hover,.filter-btn.active{border-color:var(--teal);color:var(--teal);background:rgba(14,127,116,.04);}
+
+    /* Table commandes */
+    .orders-card{background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);overflow:hidden;}
+    .orders-card-head{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--gray-light);}
+    .orders-card-title{font-family:var(--font-head);font-size:.95rem;font-weight:800;color:var(--navy);}
+    .table-wrap{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;}
+    thead th{text-align:left;padding:.65rem .9rem;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--gray-light);white-space:nowrap;background:var(--salt);}
+    tbody td{padding:.9rem .9rem;border-bottom:1px solid var(--gray-light);vertical-align:middle;color:var(--text);}
+    tbody tr:last-child td{border-bottom:none;}
+    tbody tr:hover td{background:var(--salt);}
+    .ord-ref{font-family:var(--font-head);font-size:.82rem;font-weight:700;color:var(--sea);}
+    .ord-date{font-size:.82rem;color:var(--text-soft);}
+    .ord-items{font-size:.82rem;color:var(--text-soft);}
+    .ord-port{display:inline-flex;align-items:center;gap:.3rem;font-size:.78rem;color:var(--text-soft);}
+    .ord-amount{font-family:var(--font-head);font-size:.9rem;font-weight:700;color:var(--navy);}
+
+    /* Badges statuts */
+    .badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:700;padding:.25rem .65rem;border-radius:10px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;}
+    .badge-pending{background:rgba(74,127,165,.1);color:var(--steel);border:1px solid rgba(74,127,165,.2);}
+    .badge-progress{background:rgba(232,168,56,.12);color:var(--amber);border:1px solid rgba(232,168,56,.25);}
+    .badge-delivered{background:rgba(27,188,156,.1);color:var(--teal);border:1px solid rgba(27,188,156,.2);}
+    .badge-cancelled{background:rgba(224,123,84,.1);color:var(--coral);border:1px solid rgba(224,123,84,.2);}
+
+    /* Actions */
+    .btn-sm{padding:.3rem .8rem;background:var(--salt);border:1px solid var(--gray-light);border-radius:var(--radius-sm);font-size:.75rem;font-weight:600;color:var(--text-soft);cursor:pointer;font-family:var(--font-body);transition:all .2s;}
+    .btn-sm:hover{border-color:var(--teal);color:var(--teal);}
+    .actions-cell{display:flex;gap:.4rem;}
+
+    /* Pagination */
+    .pagination{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-top:1px solid var(--gray-light);font-size:.82rem;color:var(--text-muted);}
+    .page-btns{display:flex;gap:.3rem;}
+    .page-btn{width:30px;height:30px;border:1px solid var(--gray-light);border-radius:var(--radius-sm);background:var(--white);color:var(--text-soft);font-size:.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:var(--font-body);}
+    .page-btn:hover{border-color:var(--teal);color:var(--teal);}
+    .page-btn.active{background:var(--navy);border-color:var(--navy);color:var(--white);}
+
+    /* Drawer détail */
+    .drawer{position:fixed;top:0;right:0;bottom:0;width:440px;background:var(--white);border-left:1px solid var(--gray-light);box-shadow:var(--shadow-md);z-index:300;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;}
+    .drawer.open{transform:translateX(0);}
+    .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid var(--gray-light);}
+    .drawer-title{font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--navy);}
+    .drawer-close{background:none;border:none;font-size:1.2rem;color:var(--text-muted);cursor:pointer;transition:color .2s;padding:.2rem;}
+    .drawer-close:hover{color:var(--coral);}
+    .drawer-body{flex:1;overflow-y:auto;padding:1.5rem;}
+    .drawer-section-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.75rem;}
+    .drawer-row{display:flex;justify-content:space-between;padding:.5rem 0;font-size:.85rem;border-bottom:1px solid var(--gray-light);}
+    .drawer-row:last-child{border-bottom:none;}
+    .drawer-row-label{color:var(--text-soft);}
+    .drawer-row-val{font-weight:600;color:var(--text);text-align:right;}
+    .drawer-divider{height:1px;background:var(--gray-light);margin:1rem 0;}
+    .drawer-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 0;border-bottom:1px solid var(--gray-light);font-size:.85rem;}
+    .drawer-item:last-child{border-bottom:none;}
+    .drawer-item-icon{font-size:1.1rem;width:32px;height:32px;background:var(--salt);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .drawer-item-name{flex:1;font-weight:500;color:var(--text);}
+    .drawer-item-qty{font-size:.78rem;color:var(--text-muted);}
+    .drawer-item-price{font-family:var(--font-head);font-weight:700;color:var(--navy);}
+    .drawer-total{display:flex;justify-content:space-between;align-items:center;padding:1rem;background:var(--salt);border-radius:var(--radius-sm);margin-top:1rem;}
+    .drawer-total-label{font-size:.85rem;font-weight:600;color:var(--text-soft);}
+    .drawer-total-val{font-family:var(--font-head);font-size:1.2rem;font-weight:800;color:var(--navy);}
+
+    /* Timeline suivi */
+    .timeline{display:flex;flex-direction:column;gap:0;margin-top:.5rem;}
+    .tl-item{display:flex;gap:.85rem;position:relative;}
+    .tl-item:not(:last-child)::before{content:'';position:absolute;left:11px;top:28px;bottom:-8px;width:1px;background:var(--gray-light);}
+    .tl-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;margin-top:2px;}
+    .tl-dot.done{background:var(--teal);color:var(--white);}
+    .tl-dot.active{background:var(--amber);color:var(--white);}
+    .tl-dot.pending{background:var(--gray-light);color:var(--text-muted);}
+    .tl-content{flex:1;padding-bottom:1.25rem;}
+    .tl-label{font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:.15rem;}
+    .tl-date{font-size:.75rem;color:var(--text-muted);}
+
+    .overlay{position:fixed;inset:0;background:rgba(11,31,58,.35);z-index:200;display:none;}
+    .overlay.show{display:block;}
+
+    @media(max-width:1024px){.dash-sidebar{display:none;}.stats-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:600px){.dash-content{padding:1rem;}.stats-grid{grid-template-columns:1fr;}.filters-bar{flex-direction:column;align-items:stretch;}.drawer{width:100%;}}
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="dash-sidebar">
+  <div class="dash-sidebar-logo">
+    <div class="logo-icon">⚓</div>
+    <span class="logo-text">Lome <span>Marine</span></span>
+  </div>
+  <nav class="dash-nav">
+    <div class="dash-nav-group">
+      <span class="dash-nav-label">Principal</span>
+      <a href="dashboard.html" class="dash-nav-link"><span class="dash-nav-icon">📊</span><span>Tableau de bord</span></a>
+      <a href="catalogue.html" class="dash-nav-link"><span class="dash-nav-icon">📦</span><span>Catalogue</span></a>
+      <a href="mes-commandes.html" class="dash-nav-link active"><span class="dash-nav-icon">🛒</span><span>Mes commandes</span><span class="dash-nav-badge">3</span></a>
+      <a href="dossiers.html" class="dash-nav-link"><span class="dash-nav-icon">📁</span><span>Mes dossiers</span></a>
+    </div>
+    <div class="dash-nav-group">
+      <span class="dash-nav-label">Documents</span>
+      <a href="documents.html" class="dash-nav-link"><span class="dash-nav-icon">📄</span><span>Mes documents</span></a>
+      <a href="factures.html" class="dash-nav-link"><span class="dash-nav-icon">🧾</span><span>Factures</span></a>
+    </div>
+    <div class="dash-nav-group">
+      <span class="dash-nav-label">Compte</span>
+      <a href="profil.html" class="dash-nav-link"><span class="dash-nav-icon">👤</span><span>Mon profil</span></a>
+      <a href="notifications.html" class="dash-nav-link"><span class="dash-nav-icon">🔔</span><span>Notifications</span><span class="dash-nav-badge">2</span></a>
+    </div>
+  </nav>
+  <div class="dash-sidebar-footer">
+    <div class="dash-user-info">
+      <div class="dash-user-avatar">CM</div>
+      <div><div class="dash-user-name">Capitaine Martin</div><div class="dash-user-role">MV Atlantic Star</div></div>
+    </div>
+    <a href="login.html" class="dash-logout">⏻ Déconnexion</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="dash-main">
+
+  <!-- Header -->
+  <header class="dash-header">
+    <div class="dash-header-left">
+      <div>
+        <h1 class="dash-page-title">Mes commandes</h1>
+        <p class="dash-page-sub">MV Atlantic Star · Historique et suivi en temps réel</p>
+      </div>
+    </div>
+    <div class="dash-header-right">
+      <div class="dash-port-tag"><span>📍</span><span>Port de Lomé</span></div>
+      <a href="catalogue.html" class="btn-new-order">+ Nouvelle commande</a>
+    </div>
+  </header>
+
+  <!-- Contenu -->
+  <div class="dash-content">
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(14,127,116,.1);">📦</div>
+        <div>
+          <div class="stat-label">Total commandes</div>
+          <div class="stat-val">24</div>
+          <div class="stat-trend trend-up">↑ +3 ce mois</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(232,168,56,.1);">⏳</div>
+        <div>
+          <div class="stat-label">En cours</div>
+          <div class="stat-val">3</div>
+          <div class="stat-trend trend-neutral">2 en livraison</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(27,188,156,.1);">✅</div>
+        <div>
+          <div class="stat-label">Livrées</div>
+          <div class="stat-val">20</div>
+          <div class="stat-trend trend-up">↑ 83% taux livraison</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(27,94,138,.1);">💰</div>
+        <div>
+          <div class="stat-label">Total dépensé</div>
+          <div class="stat-val" style="font-size:1.1rem;">42 870 $</div>
+          <div class="stat-trend trend-neutral">Ce trimestre</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtres -->
+    <div class="filters-bar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" placeholder="Rechercher une commande, référence, produit…" id="searchOrders" oninput="filterOrders()">
+      </div>
+      <button class="filter-btn active" data-status="all" onclick="setStatus('all',this)">Toutes</button>
+      <button class="filter-btn" data-status="pending" onclick="setStatus('pending',this)">⏳ En attente</button>
+      <button class="filter-btn" data-status="progress" onclick="setStatus('progress',this)">🔄 En cours</button>
+      <button class="filter-btn" data-status="delivered" onclick="setStatus('delivered',this)">✅ Livrées</button>
+      <button class="filter-btn" data-status="cancelled" onclick="setStatus('cancelled',this)">✕ Annulées</button>
+    </div>
+
+    <!-- Table -->
+    <div class="orders-card">
+      <div class="orders-card-head">
+        <div class="orders-card-title">Historique des commandes</div>
+        <button class="btn-sm" onclick="exportCSV()">⬇ Exporter CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Référence</th>
+              <th>Date</th>
+              <th>Articles</th>
+              <th>Port</th>
+              <th>Montant</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span id="paginationInfo">Affichage 1–8 sur 8 commandes</span>
+        <div class="page-btns">
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn">›</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- DRAWER DÉTAIL -->
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-title" id="drawerTitle">Détail commande</div>
+      <div style="font-size:.78rem;color:var(--text-muted);" id="drawerSub"></div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<script>
+  var ORDERS=[
+    {ref:'LM-2025-09871',date:'21 Mai 2025',items:['Fresh & Frozen Products','Spirits & Wines','Gilets SOLAS'],port:'Lomé',amount:14820,status:'progress',
+     timeline:[{label:'Commande reçue',date:'21 Mai 2025 · 09:14',done:true},{label:'Traitement agent',date:'21 Mai 2025 · 10:30',done:true},{label:'Préparation en cours',date:'21 Mai 2025 · 14:00',active:true},{label:'Livraison à bord',date:'Prévue 22 Mai · 08:00',done:false}]},
+    {ref:'LM-2025-09744',date:'18 Mai 2025',items:['Mooring Equipment','Marine Chemicals'],port:'Lomé',amount:8500,status:'delivered',
+     timeline:[{label:'Commande reçue',date:'18 Mai 2025 · 11:22',done:true},{label:'Traitement agent',date:'18 Mai 2025 · 13:00',done:true},{label:'Livraison effectuée',date:'19 Mai 2025 · 07:45',done:true},{label:'Signé à bord',date:'19 Mai 2025 · 08:10',done:true}]},
+    {ref:'LM-2025-09632',date:'14 Mai 2025',items:['Fuel Oil MGO','Lubricants'],port:'Lagos',amount:12400,status:'delivered',
+     timeline:[{label:'Commande reçue',date:'14 Mai 2025 · 08:00',done:true},{label:'Traitement agent',date:'14 Mai 2025 · 09:30',done:true},{label:'Livraison effectuée',date:'14 Mai 2025 · 22:00',done:true},{label:'Signé à bord',date:'14 Mai 2025 · 22:30',done:true}]},
+    {ref:'LM-2025-09510',date:'10 Mai 2025',items:['Safety Equipment','PPE'],port:'Lomé',amount:3200,status:'pending',
+     timeline:[{label:'Commande reçue',date:'10 Mai 2025 · 16:45',done:true},{label:'En attente de validation',date:'En cours',active:true},{label:'Préparation',date:'—',done:false},{label:'Livraison à bord',date:'—',done:false}]},
+    {ref:'LM-2025-09388',date:'5 Mai 2025',items:['Dry Provisions','Bonded Stores','Cabin Stores'],port:'Tema',amount:6750,status:'delivered',
+     timeline:[{label:'Commande reçue',date:'5 Mai 2025 · 10:00',done:true},{label:'Traitement agent',date:'5 Mai 2025 · 11:30',done:true},{label:'Livraison effectuée',date:'6 Mai 2025 · 09:00',done:true},{label:'Signé à bord',date:'6 Mai 2025 · 09:20',done:true}]},
+    {ref:'LM-2025-09201',date:'28 Avr 2025',items:['Fumigation Services'],port:'Lomé',amount:1800,status:'delivered',
+     timeline:[{label:'Demande reçue',date:'28 Avr 2025 · 14:00',done:true},{label:'Devis envoyé',date:'28 Avr 2025 · 15:30',done:true},{label:'Intervention effectuée',date:'29 Avr 2025 · 07:00',done:true},{label:'Certificat remis',date:'29 Avr 2025 · 09:00',done:true}]},
+    {ref:'LM-2025-09088',date:'22 Avr 2025',items:['Anti-Piracy Equipment'],port:'Lagos',amount:4200,status:'cancelled',
+     timeline:[{label:'Commande reçue',date:'22 Avr 2025 · 10:00',done:true},{label:'Annulée par le client',date:'22 Avr 2025 · 11:30',done:true}]},
+    {ref:'LM-2025-08950',date:'15 Avr 2025',items:['Fresh Products','Dairy','Bakery'],port:'Cotonou',amount:5200,status:'progress',
+     timeline:[{label:'Commande reçue',date:'15 Avr 2025 · 09:00',done:true},{label:'Traitement agent',date:'15 Avr 2025 · 10:00',done:true},{label:'En préparation',date:'16 Avr 2025 · 08:00',active:true},{label:'Livraison à bord',date:'Prévue 16 Avr · 14:00',done:false}]},
+  ];
+
+  var currentStatus='all';
+  var currentSearch='';
+
+  function badgeHtml(s){
+    var map={pending:'badge-pending pending',progress:'badge-progress progress',delivered:'badge-delivered delivered',cancelled:'badge-cancelled cancelled'};
+    var label={pending:'⏳ En attente',progress:'🔄 En cours',delivered:'✅ Livré',cancelled:'✕ Annulé'};
+    return '<span class="badge '+map[s]+'">'+label[s]+'</span>';
+  }
+
+  function fmtAmt(n){return n.toLocaleString('fr-FR')+' $';}
+
+  function filterOrders(){
+    currentSearch=document.getElementById('searchOrders').value.toLowerCase();
+    render();
+  }
+  function setStatus(s,btn){
+    currentStatus=s;
+    document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    render();
+  }
+  function render(){
+    var filtered=ORDERS.filter(function(o){
+      var matchStatus=currentStatus==='all'||o.status===currentStatus;
+      var matchSearch=!currentSearch||o.ref.toLowerCase().includes(currentSearch)||o.items.join(' ').toLowerCase().includes(currentSearch)||o.port.toLowerCase().includes(currentSearch);
+      return matchStatus&&matchSearch;
+    });
+    var tbody=document.getElementById('ordersBody');
+    if(!filtered.length){
+      tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:3rem;color:var(--text-muted);">Aucune commande trouvée</td></tr>';
+      document.getElementById('paginationInfo').textContent='0 commande';
+      return;
+    }
+    document.getElementById('paginationInfo').textContent='Affichage 1–'+filtered.length+' sur '+filtered.length+' commande'+(filtered.length>1?'s':'');
+    tbody.innerHTML=filtered.map(function(o,i){
+      return '<tr>'+
+        '<td><div class="ord-ref">'+o.ref+'</div></td>'+
+        '<td><div class="ord-date">'+o.date+'</div></td>'+
+        '<td><div class="ord-items">'+o.items.slice(0,2).join(', ')+(o.items.length>2?' +'+( o.items.length-2):'')+'</div></td>'+
+        '<td><div class="ord-port">📍 '+o.port+'</div></td>'+
+        '<td><div class="ord-amount">'+fmtAmt(o.amount)+'</div></td>'+
+        '<td>'+badgeHtml(o.status)+'</td>'+
+        '<td><div class="actions-cell">'+
+          '<button class="btn-sm" onclick="openDrawer('+i+')">Détails</button>'+
+          (o.status==='delivered'?'<button class="btn-sm">📄 PDF</button>':'')+
+        '</div></td>'+
+      '</tr>';
+    }).join('');
+    window._filteredOrders=filtered;
+  }
+
+  function openDrawer(idx){
+    var o=window._filteredOrders?window._filteredOrders[idx]:ORDERS[idx];
+    var drawer=document.getElementById('drawer');
+    var overlay=document.getElementById('overlay');
+    document.getElementById('drawerTitle').textContent='Commande '+o.ref;
+    document.getElementById('drawerSub').textContent=o.date+' · Port de '+o.port;
+    var tl=o.timeline.map(function(t){
+      var cls=t.done?'done':(t.active?'active':'pending');
+      var icon=t.done?'✓':(t.active?'→':'·');
+      return '<div class="tl-item">'+
+        '<div class="tl-dot '+cls+'">'+icon+'</div>'+
+        '<div class="tl-content"><div class="tl-label">'+t.label+'</div><div class="tl-date">'+t.date+'</div></div>'+
+      '</div>';
+    }).join('');
+    var items=o.items.map(function(name){
+      return '<div class="drawer-item">'+
+        '<div class="drawer-item-icon">📦</div>'+
+        '<div class="drawer-item-name">'+name+'</div>'+
+        '<div class="drawer-item-price">Sur devis</div>'+
+      '</div>';
+    }).join('');
+    document.getElementById('drawerBody').innerHTML=
+      '<div class="drawer-section-title">Statut commande</div>'+
+      '<div style="margin-bottom:1rem;">'+badgeHtml(o.status)+'</div>'+
+      '<div class="drawer-section-title" style="margin-top:1.25rem;">Suivi livraison</div>'+
+      '<div class="timeline" style="margin-bottom:1.5rem;">'+tl+'</div>'+
+      '<div class="drawer-divider"></div>'+
+      '<div class="drawer-section-title">Informations commande</div>'+
+      '<div class="drawer-row"><span class="drawer-row-label">Référence</span><span class="drawer-row-val" style="color:var(--sea);">'+o.ref+'</span></div>'+
+      '<div class="drawer-row"><span class="drawer-row-label">Date</span><span class="drawer-row-val">'+o.date+'</span></div>'+
+      '<div class="drawer-row"><span class="drawer-row-label">Port</span><span class="drawer-row-val">'+o.port+'</span></div>'+
+      '<div class="drawer-row"><span class="drawer-row-label">Navire</span><span class="drawer-row-val">MV Atlantic Star</span></div>'+
+      '<div class="drawer-divider"></div>'+
+      '<div class="drawer-section-title">Articles commandés</div>'+
+      items+
+      '<div class="drawer-total">'+
+        '<div class="drawer-total-label">Total commande</div>'+
+        '<div class="drawer-total-val">'+fmtAmt(o.amount)+'</div>'+
+      '</div>';
+    drawer.classList.add('open');
+    overlay.classList.add('show');
+  }
+
+  function closeDrawer(){
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  function exportCSV(){
+    var header='Référence,Date,Port,Montant,Statut\n';
+    var rows=ORDERS.map(function(o){return o.ref+','+o.date+','+o.port+','+o.amount+','+o.status;}).join('\n');
+    var blob=new Blob([header+rows],{type:'text/csv;charset=utf-8;'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='mes-commandes-lome-marine.csv';
+    a.click();
+  }
+
+  render();
+</script>
+</body>
+</html>

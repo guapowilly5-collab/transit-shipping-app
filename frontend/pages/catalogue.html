@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catalogue — Espace Navire · Lome Marine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/catalogue.css" />
+</head>
+<body class="dash-body">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR DASHBOARD
+  ══════════════════════════════════════ -->
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="dash-sidebar-logo">
+      <div class="logo-icon">⚓</div>
+      <span class="logo-text">Lome <span>Marine</span></span>
+    </div>
+
+    <nav class="dash-nav">
+      <div class="dash-nav-group">
+        <span class="dash-nav-label">Principal</span>
+        <a href="dashboard.html" class="dash-nav-link">
+          <span class="dash-nav-icon">📊</span><span>Tableau de bord</span>
+        </a>
+        <a href="catalogue.html" class="dash-nav-link active">
+          <span class="dash-nav-icon">📦</span><span>Catalogue</span>
+        </a>
+        <a href="commandes.html" class="dash-nav-link">
+          <span class="dash-nav-icon">🛒</span><span>Mes commandes</span>
+          <span class="dash-nav-badge">3</span>
+        </a>
+        <a href="dossiers.html" class="dash-nav-link">
+          <span class="dash-nav-icon">📁</span><span>Mes dossiers</span>
+        </a>
+      </div>
+      <div class="dash-nav-group">
+        <span class="dash-nav-label">Documents</span>
+        <a href="documents.html" class="dash-nav-link">
+          <span class="dash-nav-icon">📄</span><span>Mes documents</span>
+        </a>
+        <a href="factures.html" class="dash-nav-link">
+          <span class="dash-nav-icon">🧾</span><span>Factures</span>
+        </a>
+      </div>
+      <div class="dash-nav-group">
+        <span class="dash-nav-label">Compte</span>
+        <a href="profil.html" class="dash-nav-link">
+          <span class="dash-nav-icon">👤</span><span>Mon profil</span>
+        </a>
+        <a href="notifications.html" class="dash-nav-link">
+          <span class="dash-nav-icon">🔔</span><span>Notifications</span>
+          <span class="dash-nav-badge">2</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="dash-sidebar-footer">
+      <div class="dash-user-info">
+        <div class="dash-user-avatar">CM</div>
+        <div>
+          <div class="dash-user-name">Capitaine Martin</div>
+          <div class="dash-user-role">MV Atlantic Star</div>
+        </div>
+      </div>
+      <a href="login.html" class="dash-logout">⏻ Déconnexion</a>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       CONTENU PRINCIPAL
+  ══════════════════════════════════════ -->
+  <main class="dash-main">
+
+    <!-- Header dashboard -->
+    <header class="dash-header">
+      <div class="dash-header-left">
+        <button class="dash-toggle-sidebar" onclick="toggleSidebar()">☰</button>
+        <div>
+          <h1 class="dash-page-title">Catalogue</h1>
+          <p class="dash-page-sub">MV Atlantic Star — Lomé, Togo · Tarifs en temps réel</p>
+        </div>
+      </div>
+      <div class="dash-header-right">
+        <div class="dash-port-tag"><span>📍</span><span>Port de Lomé</span></div>
+        <button class="dash-notif-btn">🔔 <span class="dash-notif-count">2</span></button>
+        <button class="cat-cart-trigger" onclick="toggleCart()">
+          🛒 Panier
+          <span class="cat-cart-count" id="cartCount" style="display:none;">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Bandeau client validé -->
+    <div class="cat-client-banner">
+      <div class="cat-client-banner-icon">✅</div>
+      <div>
+        <strong>Espace navire activé — Prix visibles</strong>
+        <p>Connecté en tant que client navire validé. Ajoutez des produits au panier et passez commande en ligne.</p>
+      </div>
+    </div>
+
+    <!-- ══ ZONE CATALOGUE ══ -->
+    <div class="cat-zone">
+
+      <!-- Topbar recherche -->
+      <div class="cat-topbar" style="margin-top: 1.5rem;">
+        <div class="cat-search-wrap">
+          <span class="cat-search-icon">🔍</span>
+          <input type="text" class="cat-search" id="catSearch" placeholder="Rechercher un produit ou service…" />
+        </div>
+        <div class="cat-topbar-right">
+          <span class="cat-results-count" id="resultsCount"></span>
+        </div>
+      </div>
+
+      <!-- Filtres catégories inline -->
+      <div class="cat-filters-inline">
+        <button class="cat-filter active" data-cat="all">🗂️ Tout</button>
+        <button class="cat-filter" data-cat="provisions">🍱 Provisions</button>
+        <button class="cat-filter" data-cat="bonded">🍾 Bonded</button>
+        <button class="cat-filter" data-cat="deck">⚙️ Deck / Engine</button>
+        <button class="cat-filter" data-cat="cabin">🛏️ Cabin</button>
+        <button class="cat-filter" data-cat="safety">🦺 Safety</button>
+        <button class="cat-filter" data-cat="bunker">⛽ Bunker</button>
+        <button class="cat-filter" data-cat="antipiracy">🛡️ Anti-Piracy</button>
+        <button class="cat-filter" data-cat="special">🔧 Services</button>
+      </div>
+
+      <!-- Grille produits avec PRIX VISIBLES + boutons panier -->
+      <div id="catGrid">
+
+        <!-- ── PROVISIONS ── -->
+        <div class="cat-section" data-cat="provisions">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🍱</span>
+            <h2>Provisions</h2>
+            <span class="cat-section-badge">Fresh · Frozen · Dry</span>
+          </div>
+          <div class="cat-cards">
+
+            <div class="cat-card" data-name="Fresh & Frozen Products">
+              <div class="cat-card-icon">🥩</div>
+              <div class="cat-card-info">
+                <h3>Fresh & Frozen Products</h3>
+                <p>Viandes, poissons, légumes frais et surgelés pour l'équipage.</p>
+                <div class="cat-card-tags"><span>Fresh</span><span>Frozen</span><span>Local & Import</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ kg — prix variable</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="prov-001"
+                  onclick="addToCart('prov-001','Fresh & Frozen Products','—','kg','🥩')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Dairy & Bakery Products">
+              <div class="cat-card-icon">🥛</div>
+              <div class="cat-card-info">
+                <h3>Dairy & Bakery Products</h3>
+                <p>Produits laitiers frais et longue conservation, pain frais, viennoiseries.</p>
+                <div class="cat-card-tags"><span>Dairy</span><span>Fresh Bread</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">18.50 $</div>
+                  <div class="cat-card-price-unit">/ caisse 12 unités</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="prov-002"
+                  onclick="addToCart('prov-002','Dairy & Bakery Products','18.50','caisse','🥛')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Dry Provisions">
+              <div class="cat-card-icon">🌾</div>
+              <div class="cat-card-info">
+                <h3>Dry Provisions</h3>
+                <p>Céréales, riz, pâtes, conserves, biscuits, noix, jus de fruits.</p>
+                <div class="cat-card-tags"><span>Cereals</span><span>Canned</span><span>Biscuits</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">42.00 $</div>
+                  <div class="cat-card-price-unit">/ lot standard</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="prov-003"
+                  onclick="addToCart('prov-003','Dry Provisions','42.00','lot','🌾')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Meat & Poultry">
+              <div class="cat-card-icon">🍗</div>
+              <div class="cat-card-info">
+                <h3>Meat & Poultry</h3>
+                <p>Viandes fraîches et surgelées, charcuteries, fast food products.</p>
+                <div class="cat-card-tags"><span>Fresh Meat</span><span>Cold Cuts</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ kg — selon marché</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="prov-004"
+                  onclick="addToCart('prov-004','Meat & Poultry','—','kg','🍗')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Fruits & Vegetables">
+              <div class="cat-card-icon">🥦</div>
+              <div class="cat-card-info">
+                <h3>Fruits & Vegetables</h3>
+                <p>Fruits et légumes frais et en conserve, locaux et importés.</p>
+                <div class="cat-card-tags"><span>Fresh</span><span>Canned</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ kg — saisonnier</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="prov-005"
+                  onclick="addToCart('prov-005','Fruits & Vegetables','—','kg','🥦')">+ Demander</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── BONDED STORES ── -->
+        <div class="cat-section" data-cat="bonded">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🍾</span>
+            <h2>Bonded Stores</h2>
+            <span class="cat-section-badge">Duty Free · Franchise douanière</span>
+          </div>
+          <div class="cat-cards">
+
+            <div class="cat-card" data-name="Spirits & Wines">
+              <div class="cat-card-icon">🥃</div>
+              <div class="cat-card-info">
+                <h3>Spirits & Wines</h3>
+                <p>Liqueurs, spiritueux, vins de table, champagnes.</p>
+                <div class="cat-card-tags"><span>Duty Free</span><span>Spirits</span><span>Wines</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">24.00 $</div>
+                  <div class="cat-card-price-unit">/ bouteille 75cl</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="bond-001"
+                  onclick="addToCart('bond-001','Spirits & Wines','24.00','bouteille','🥃')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Beer & Soft Drinks">
+              <div class="cat-card-icon">🍺</div>
+              <div class="cat-card-info">
+                <h3>Beer & Soft Drinks</h3>
+                <p>Bières nationales et internationales, sodas, eaux minérales.</p>
+                <div class="cat-card-tags"><span>Beer</span><span>Mineral Water</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">32.00 $</div>
+                  <div class="cat-card-price-unit">/ caisse 24 unités</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="bond-002"
+                  onclick="addToCart('bond-002','Beer & Soft Drinks','32.00','caisse','🍺')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Tobacco & Cigarettes">
+              <div class="cat-card-icon">🚬</div>
+              <div class="cat-card-info">
+                <h3>Tobacco & Cigarettes</h3>
+                <p>Cigarettes et produits du tabac en franchise douanière.</p>
+                <div class="cat-card-tags"><span>Duty Free</span><span>Tobacco</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">38.00 $</div>
+                  <div class="cat-card-price-unit">/ cartouche 200u</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="bond-003"
+                  onclick="addToCart('bond-003','Tobacco & Cigarettes','38.00','cartouche','🚬')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Chocolates & Confectionery">
+              <div class="cat-card-icon">🍫</div>
+              <div class="cat-card-info">
+                <h3>Chocolates & Confectionery</h3>
+                <p>Chocolats, bonbons, desserts, parfums et articles de confort.</p>
+                <div class="cat-card-tags"><span>Chocolates</span><span>Perfumes</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">15.00 $</div>
+                  <div class="cat-card-price-unit">/ assortiment</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="bond-004"
+                  onclick="addToCart('bond-004','Chocolates & Confectionery','15.00','assortiment','🍫')">+ Panier</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── DECK / ENGINE ── -->
+        <div class="cat-section" data-cat="deck">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">⚙️</span>
+            <h2>Deck / Engine / Electrical Spares</h2>
+            <span class="cat-section-badge">ISSA · IMPA</span>
+          </div>
+          <div class="cat-cards">
+
+            <div class="cat-card" data-name="Mooring & Towing Equipment">
+              <div class="cat-card-icon">⛓️</div>
+              <div class="cat-card-info">
+                <h3>Mooring & Towing Equipment</h3>
+                <p>Cordes, câbles galvanisés, ancres, chaînes, shackles.</p>
+                <div class="cat-card-tags"><span>Ropes</span><span>Steel Wire</span><span>Anchors</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ spéc. IMPA</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="deck-001"
+                  onclick="addToCart('deck-001','Mooring & Towing Equipment','—','lot','⛓️')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Marine Chemicals & Paints">
+              <div class="cat-card-icon">🧪</div>
+              <div class="cat-card-info">
+                <h3>Marine Chemicals & Paints</h3>
+                <p>Produits chimiques marins, peintures, matériaux de nettoyage.</p>
+                <div class="cat-card-tags"><span>Chemicals</span><span>Coating</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">85.00 $</div>
+                  <div class="cat-card-price-unit">/ bidon 20L</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="deck-002"
+                  onclick="addToCart('deck-002','Marine Chemicals & Paints','85.00','bidon','🧪')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Tools & Measuring Instruments">
+              <div class="cat-card-icon">🔧</div>
+              <div class="cat-card-info">
+                <h3>Tools & Measuring Instruments</h3>
+                <p>Outils pneumatiques et électriques, instruments de mesure.</p>
+                <div class="cat-card-tags"><span>Hand Tools</span><span>Pneumatic</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ réf. IMPA</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="deck-003"
+                  onclick="addToCart('deck-003','Tools & Measuring Instruments','—','unité','🔧')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Valves & Pipes">
+              <div class="cat-card-icon">🔩</div>
+              <div class="cat-card-info">
+                <h3>Valves & Pipes</h3>
+                <p>Vannes industrielles, tubes acier carbone, raccords, joints.</p>
+                <div class="cat-card-tags"><span>Valves</span><span>Pipes</span><span>Fittings</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ diamètre & grade</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="deck-004"
+                  onclick="addToCart('deck-004','Valves & Pipes','—','unité','🔩')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Navigation & Electronics">
+              <div class="cat-card-icon">🧭</div>
+              <div class="cat-card-info">
+                <h3>Navigation & Electronics</h3>
+                <p>Équipements électroniques, cartes nautiques, Walkie-Talkie.</p>
+                <div class="cat-card-tags"><span>Charts</span><span>Electronics</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ équipement</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="deck-005"
+                  onclick="addToCart('deck-005','Navigation & Electronics','—','unité','🧭')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Welding & Gases">
+              <div class="cat-card-icon">🔥</div>
+              <div class="cat-card-info">
+                <h3>Welding & Gases</h3>
+                <p>Équipements de soudage et découpe, gaz industriels, hoists.</p>
+                <div class="cat-card-tags"><span>Welding</span><span>Industrial Gas</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">120.00 $</div>
+                  <div class="cat-card-price-unit">/ bouteille rechargée</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="deck-006"
+                  onclick="addToCart('deck-006','Welding & Gases','120.00','bouteille','🔥')">+ Panier</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── CABIN / SALON ── -->
+        <div class="cat-section" data-cat="cabin">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🛏️</span>
+            <h2>Cabin / Salon Stores</h2>
+            <span class="cat-section-badge">Confort équipage</span>
+          </div>
+          <div class="cat-cards">
+
+            <div class="cat-card" data-name="Bed & Laundry Accessories">
+              <div class="cat-card-icon">🛏️</div>
+              <div class="cat-card-info">
+                <h3>Bed & Laundry Accessories</h3>
+                <p>Literie, serviettes, linge de table, rideaux.</p>
+                <div class="cat-card-tags"><span>Bedding</span><span>Linen</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">55.00 $</div>
+                  <div class="cat-card-price-unit">/ kit équipage</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="cab-001"
+                  onclick="addToCart('cab-001','Bed & Laundry Accessories','55.00','kit','🛏️')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Tableware & Kitchenware">
+              <div class="cat-card-icon">🍽️</div>
+              <div class="cat-card-info">
+                <h3>Tableware & Kitchenware</h3>
+                <p>Vaisselle, couverts, ustensiles de cuisine, casseroles, poêles.</p>
+                <div class="cat-card-tags"><span>Cutlery</span><span>Plates</span><span>Pots</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">28.00 $</div>
+                  <div class="cat-card-price-unit">/ set 6 personnes</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="cab-002"
+                  onclick="addToCart('cab-002','Tableware & Kitchenware','28.00','set','🍽️')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Cleaning Products">
+              <div class="cat-card-icon">🧹</div>
+              <div class="cat-card-info">
+                <h3>Cleaning Products</h3>
+                <p>Produits ménagers, équipements de nettoyage, sacs poubelle.</p>
+                <div class="cat-card-tags"><span>Cleaning</span><span>Hygiene</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">22.00 $</div>
+                  <div class="cat-card-price-unit">/ lot mensuel</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="cab-003"
+                  onclick="addToCart('cab-003','Cleaning Products','22.00','lot','🧹')">+ Panier</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Electrical Appliances">
+              <div class="cat-card-icon">🔌</div>
+              <div class="cat-card-info">
+                <h3>Electrical Appliances</h3>
+                <p>Appareils électroménagers, machines de cuisson, machines à laver.</p>
+                <div class="cat-card-tags"><span>Appliances</span><span>Cooking</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ appareil</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="cab-004"
+                  onclick="addToCart('cab-004','Electrical Appliances','—','unité','🔌')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Office & Stationery">
+              <div class="cat-card-icon">📎</div>
+              <div class="cat-card-info">
+                <h3>Office & Stationery</h3>
+                <p>Fournitures de bureau, papiers, fournitures administratives à bord.</p>
+                <div class="cat-card-tags"><span>Stationery</span><span>Office</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">12.00 $</div>
+                  <div class="cat-card-price-unit">/ kit mensuel</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="cab-005"
+                  onclick="addToCart('cab-005','Office & Stationery','12.00','kit','📎')">+ Panier</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── SAFETY ── -->
+        <div class="cat-section" data-cat="safety">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🦺</span>
+            <h2>Safety Equipment</h2>
+            <span class="cat-section-badge">SOLAS · USCG · Lloyd's · ABS · DNV</span>
+          </div>
+          <div class="cat-cards">
+
+            <div class="cat-card" data-name="Life Saving Appliances">
+              <div class="cat-card-icon">🦺</div>
+              <div class="cat-card-info">
+                <h3>Life Saving Appliances</h3>
+                <p>Gilets gonflables, bouées, combinaisons d'immersion, radeaux.</p>
+                <div class="cat-card-tags"><span>SOLAS</span><span>Lifejackets</span><span>Liferafts</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">🔒 Certification requise</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Demander devis</a>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Firefighting Equipment">
+              <div class="cat-card-icon">🧯</div>
+              <div class="cat-card-info">
+                <h3>Firefighting Equipment</h3>
+                <p>Extincteurs CO2/poudre/mousse, tuyaux, lances, tenues de pompier.</p>
+                <div class="cat-card-tags"><span>CO2</span><span>AFFF</span><span>Fire Hoses</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ équipement certifié</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="saf-002"
+                  onclick="addToCart('saf-002','Firefighting Equipment','—','unité','🧯')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Breathing Apparatus & PPE">
+              <div class="cat-card-icon">😷</div>
+              <div class="cat-card-info">
+                <h3>Breathing Apparatus & PPE</h3>
+                <p>EEBD, appareils respiratoires, combinaisons chimiques.</p>
+                <div class="cat-card-tags"><span>EEBD</span><span>PPE</span><span>Chemical Suits</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">🔒 Certification obligatoire</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Demander devis</a>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Pyrotechnics & IMO Signals">
+              <div class="cat-card-icon">🚨</div>
+              <div class="cat-card-info">
+                <h3>Pyrotechnics & IMO Signals</h3>
+                <p>Fusées de détresse, signaux pyrotechniques, panneaux IMO.</p>
+                <div class="cat-card-tags"><span>Pyrotechnics</span><span>IMO Signs</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ kit SOLAS</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="saf-004"
+                  onclick="addToCart('saf-004','Pyrotechnics & IMO Signals','—','kit','🚨')">+ Demander</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── BUNKER ── -->
+        <div class="cat-section" data-cat="bunker">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">⛽</span>
+            <h2>Bunker Supply</h2>
+            <span class="cat-section-badge">24h/24 · Tous ports</span>
+          </div>
+          <div class="cat-cards">
+
+            <div class="cat-card" data-name="Fuel Oils HFO MDO MGO">
+              <div class="cat-card-icon">⛽</div>
+              <div class="cat-card-info">
+                <h3>Fuel Oils (HFO / MDO / MGO)</h3>
+                <p>Toutes grades. Nominations acceptées 24h/24.</p>
+                <div class="cat-card-tags"><span>HFO</span><span>MDO</span><span>MGO</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">📈 Prix marché quotidien</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Nomination</a>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Lubricating Oils">
+              <div class="cat-card-icon">🛢️</div>
+              <div class="cat-card-info">
+                <h3>Lubricating Oils</h3>
+                <p>Huiles lubrifiantes marines, toutes viscosités.</p>
+                <div class="cat-card-tags"><span>Luboils</span><span>Marine Grade</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">📈 Prix selon grade</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Demander devis</a>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Garbage & Sludge Disposal">
+              <div class="cat-card-icon">♻️</div>
+              <div class="cat-card-info">
+                <h3>Garbage & Sludge Disposal</h3>
+                <p>Évacuation déchets plastiques, alimentaires, boues d'huile.</p>
+                <div class="cat-card-tags"><span>Disposal</span><span>Environmental</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ volume m³</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="bunk-003"
+                  onclick="addToCart('bunk-003','Garbage & Sludge Disposal','—','opération','♻️')">+ Demander</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── ANTI-PIRACY ── -->
+        <div class="cat-section" data-cat="antipiracy">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🛡️</span>
+            <h2>Anti-Piracy Equipment</h2>
+            <span class="cat-section-badge">Protection · Zones à risque</span>
+          </div>
+          <div class="cat-cards">
+
+            <div class="cat-card" data-name="Razor Wires">
+              <div class="cat-card-icon">🔱</div>
+              <div class="cat-card-info">
+                <h3>Razor Wires</h3>
+                <p>Fils barbelés rasoirs pour protection périmétrique en zones à risque.</p>
+                <div class="cat-card-tags"><span>Anti-Piracy</span><span>Security</span></div>
+              </div>
+              <div class="cat-card-price">
+                <div>
+                  <div class="cat-card-price-amount">Sur devis</div>
+                  <div class="cat-card-price-unit">/ mètre linéaire</div>
+                </div>
+                <button class="cat-card-add-btn" data-product-id="ap-001"
+                  onclick="addToCart('ap-001','Razor Wires','—','lot','🔱')">+ Demander</button>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Water Cannon">
+              <div class="cat-card-icon">💦</div>
+              <div class="cat-card-info">
+                <h3>Water Cannon</h3>
+                <p>Systèmes de canons à eau pour repousser les tentatives d'abordage.</p>
+                <div class="cat-card-tags"><span>Anti-Piracy</span><span>Defense</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">🔒 Installation incluse</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Demander devis</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── SERVICES SPÉCIAUX ── -->
+        <div class="cat-section" data-cat="special">
+          <div class="cat-section-header">
+            <span class="cat-section-icon">🔧</span>
+            <h2>Services spéciaux</h2>
+            <span class="cat-section-badge">Sur mesure · Devis requis</span>
+          </div>
+          <div class="cat-cards">
+
+            <div class="cat-card" data-name="Fumigation Services">
+              <div class="cat-card-icon">💨</div>
+              <div class="cat-card-info">
+                <h3>Fumigation Services</h3>
+                <p>Fumigation des cales, désinfection, traitement phytosanitaire.</p>
+                <div class="cat-card-tags"><span>Fumigation</span><span>ISPM 15</span><span>Biocide</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">📋 Devis sur mesure</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Demander devis</a>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Rental Services">
+              <div class="cat-card-icon">🏗️</div>
+              <div class="cat-card-info">
+                <h3>Rental Services</h3>
+                <p>Grues mobiles 10–500t, chariots élévateurs, générateurs, conteneurs.</p>
+                <div class="cat-card-tags"><span>Crane</span><span>Generator</span><span>Container</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">📋 Devis sur mesure</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Demander devis</a>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Underwater Cleaning Inspection">
+              <div class="cat-card-icon">🌊</div>
+              <div class="cat-card-info">
+                <h3>Underwater Cleaning & Inspection</h3>
+                <p>Nettoyage de coque, inspection vidéo, réparations sous-marines.</p>
+                <div class="cat-card-tags"><span>Hull Cleaning</span><span>Survey</span><span>Repair</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">📋 Devis sur mesure</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Demander devis</a>
+              </div>
+            </div>
+
+            <div class="cat-card" data-name="Workshop Technical Services">
+              <div class="cat-card-icon">🛠️</div>
+              <div class="cat-card-info">
+                <h3>Workshop & Technical Services</h3>
+                <p>Réfrigération, cargo gear, réparations électriques, reconditionnement.</p>
+                <div class="cat-card-tags"><span>Workshop</span><span>Repair</span><span>Technical</span></div>
+              </div>
+              <div class="cat-card-quote">
+                <span class="cat-card-quote-label">📋 Devis sur mesure</span>
+                <a href="../index.html#contact" class="cat-card-quote-btn">Demander devis</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- fin catGrid -->
+
+      <div class="cat-no-results hidden" id="noResults">
+        <span>🔍</span>
+        <p>Aucun produit ne correspond à votre recherche.</p>
+        <button onclick="resetSearch()">Réinitialiser</button>
+      </div>
+
+    </div><!-- fin padding wrapper -->
+  </main>
+
+  <!-- ══════════════════════════════════════
+       BOUTON FLOTTANT PANIER
+  ══════════════════════════════════════ -->
+  <button id="cartFloatBtn" onclick="toggleCart()" style="display:none;">
+    🛒 Panier
+  </button>
+
+  <!-- ══════════════════════════════════════
+       OVERLAY + PANNEAU PANIER
+  ══════════════════════════════════════ -->
+  <div class="cat-overlay hidden" id="cartOverlay" onclick="toggleCart()"></div>
+
+  <div class="cat-cart-panel" id="cartPanel">
+    <div class="cat-cart-panel-header">
+      <h3>🛒 Mon panier</h3>
+      <button class="cat-cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cat-cart-items" id="cartItems"></div>
+    <div class="cat-cart-footer">
+      <div class="cat-cart-total">
+        <span>Total estimé</span>
+        <span class="cat-cart-total-amount" id="cartTotal">—</span>
+      </div>
+      <button class="cat-cart-checkout" onclick="checkout()">Passer commande →</button>
+      <p class="cat-cart-note">Les articles "Sur devis" seront confirmés par un agent.</p>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/dashboard.js"></script>
+  <script src="../js/catalogue.js"></script>
+</body>
+</html>

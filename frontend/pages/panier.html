@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panier — Lome Marine Supplier Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    :root {
+      --navy:#0b1f3a;--navy-soft:#132d4f;--sea:#1b5e8a;--teal:#0e7f74;
+      --teal-bright:#1abc9c;--coral:#e07b54;--white:#ffffff;--salt:#f5f9fc;
+      --mist:#e8f1f8;--gray-light:#dde6ee;--text:#1a2e3d;--text-soft:#4a6278;
+      --text-muted:#8aabb7;--font-head:'Syne',sans-serif;--font-body:'Inter',sans-serif;
+      --shadow-md:0 8px 24px rgba(11,31,58,0.12);--radius:10px;--radius-sm:6px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-body);color:var(--text);background:var(--salt);min-height:100vh;display:flex;flex-direction:column;}
+
+    .cart-header{background:var(--navy);padding:0 2.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(27,188,156,0.15);}
+    .cart-header-logo{display:flex;align-items:center;gap:0.6rem;text-decoration:none;}
+    .logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--teal),var(--sea));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+    .logo-text{font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--white);letter-spacing:.02em;}
+    .logo-text span{color:var(--teal-bright);}
+    .btn-back{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-sm);color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:all .2s;text-decoration:none;}
+    .btn-back:hover{border-color:var(--teal-bright);color:var(--teal-bright);}
+    .cart-user{font-size:.8rem;color:rgba(255,255,255,.4);}
+
+    .cart-layout{flex:1;display:grid;grid-template-columns:1fr 360px;gap:1.5rem;max-width:1100px;margin:2rem auto;padding:0 1.5rem;width:100%;align-items:start;}
+
+    .card{background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);overflow:hidden;}
+    .card-head{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid var(--gray-light);}
+    .card-title{font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--navy);}
+    .card-subtitle{font-size:.8rem;color:var(--text-muted);margin-top:.1rem;}
+    .btn-clear{font-size:.78rem;font-weight:600;color:var(--coral);background:none;border:none;cursor:pointer;font-family:var(--font-body);transition:opacity .2s;}
+    .btn-clear:hover{opacity:.75;}
+
+    .cart-empty{padding:4rem 2rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1rem;}
+    .cart-empty-icon{font-size:3rem;}
+    .cart-empty h3{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--navy);}
+    .cart-empty p{font-size:.88rem;color:var(--text-muted);line-height:1.65;}
+    .btn-go-cat{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.5rem;background:linear-gradient(135deg,var(--teal),var(--sea));color:var(--white);border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;transition:opacity .2s;text-decoration:none;}
+    .btn-go-cat:hover{opacity:.9;}
+
+    .cart-items-list{padding:0 1.5rem;}
+    .cart-item{display:flex;align-items:center;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--gray-light);}
+    .cart-item:last-child{border-bottom:none;}
+    .item-icon{width:48px;height:48px;background:linear-gradient(135deg,rgba(14,127,116,.1),rgba(27,94,138,.1));border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+    .item-info{flex:1;min-width:0;}
+    .item-name{font-size:.9rem;font-weight:600;color:var(--navy);margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .item-cat{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);}
+    .qty-ctrl{display:flex;align-items:center;border:1.5px solid var(--gray-light);border-radius:var(--radius-sm);overflow:hidden;}
+    .qty-btn{width:28px;height:28px;background:var(--salt);border:none;font-size:.9rem;font-weight:700;color:var(--text-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+    .qty-btn:hover{background:var(--mist);color:var(--teal);}
+    .qty-val{width:36px;height:28px;border:none;border-left:1.5px solid var(--gray-light);border-right:1.5px solid var(--gray-light);text-align:center;font-size:.85rem;font-weight:600;font-family:var(--font-body);color:var(--text);background:var(--white);outline:none;}
+    .item-price{font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--navy);min-width:80px;text-align:right;}
+    .item-unit{font-size:.72rem;color:var(--text-muted);text-align:right;}
+    .btn-remove{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:.9rem;padding:.25rem;border-radius:4px;transition:color .2s;}
+    .btn-remove:hover{color:var(--coral);}
+
+    .cart-note{padding:1.25rem 1.5rem;border-top:1px solid var(--gray-light);}
+    .cart-note label{display:block;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);margin-bottom:.5rem;}
+    .cart-note textarea{width:100%;padding:.7rem .9rem;border:1.5px solid var(--gray-light);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.88rem;color:var(--text);resize:vertical;min-height:70px;outline:none;transition:border-color .2s;}
+    .cart-note textarea:focus{border-color:var(--teal);}
+
+    .recap-body{padding:1.25rem 1.5rem;}
+    .recap-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;font-size:.88rem;color:var(--text-soft);}
+    .recap-row.total{border-top:1px solid var(--gray-light);margin-top:.5rem;padding-top:1rem;font-size:1rem;font-weight:700;color:var(--navy);}
+    .recap-val{font-weight:600;color:var(--text);}
+    .recap-row.total .recap-val{font-family:var(--font-head);font-size:1.4rem;font-weight:800;color:var(--navy);}
+    .recap-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(14,127,116,.08);color:var(--teal);padding:.2rem .6rem;border-radius:10px;}
+    .recap-divider{height:1px;background:var(--gray-light);margin:.75rem 0;}
+    .recap-port{display:flex;align-items:center;gap:.5rem;padding:.6rem .75rem;background:var(--salt);border-radius:var(--radius-sm);font-size:.82rem;color:var(--text-soft);margin-bottom:.75rem;}
+    .btn-order{display:flex;align-items:center;justify-content:center;gap:.4rem;width:100%;padding:.95rem;background:linear-gradient(135deg,var(--navy),var(--navy-soft));color:var(--white);border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:.75rem;text-decoration:none;}
+    .btn-order:hover{background:linear-gradient(135deg,var(--teal),var(--sea));box-shadow:0 6px 20px rgba(14,127,116,.35);}
+    .btn-quote-only{display:flex;align-items:center;justify-content:center;gap:.4rem;width:100%;padding:.75rem;background:transparent;border:1px solid var(--gray-light);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.88rem;font-weight:600;color:var(--text-soft);cursor:pointer;transition:all .2s;}
+    .btn-quote-only:hover{border-color:var(--teal);color:var(--teal);}
+    .secure-note{display:flex;align-items:center;justify-content:center;gap:.4rem;font-size:.75rem;color:var(--text-muted);margin-top:.75rem;text-align:center;}
+
+    .info-row{display:flex;gap:.75rem;align-items:flex-start;font-size:.82rem;color:var(--text-soft);padding:.5rem 0;}
+    .info-row-icon{font-size:1rem;flex-shrink:0;}
+
+    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--navy);color:var(--white);padding:.75rem 1.2rem;border-radius:var(--radius-sm);font-size:.85rem;font-weight:500;display:none;align-items:center;gap:.5rem;z-index:999;box-shadow:var(--shadow-md);}
+    .toast.show{display:flex;}
+    .hidden{display:none!important;}
+
+    @media(max-width:900px){.cart-layout{grid-template-columns:1fr;}}
+    @media(max-width:600px){.cart-layout{padding:0 1rem;margin:1rem auto;}.cart-header{padding:0 1rem;}}
+  </style>
+</head>
+<body>
+
+<header class="cart-header">
+  <a href="../pages/catalogue.html" class="cart-header-logo">
+    <div class="logo-icon">⚓</div>
+    <span class="logo-text">Lome <span>Marine</span></span>
+  </a>
+  <div style="display:flex;align-items:center;gap:.75rem;">
+    <span class="cart-user">🚢 MV Atlantic Star · Port de Lomé</span>
+    <a href="../pages/catalogue.html" class="btn-back">← Continuer les achats</a>
+  </div>
+</header>
+
+<div class="cart-layout">
+
+  <!-- COL GAUCHE -->
+  <div>
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Mon panier</div>
+          <div class="card-subtitle" id="cartSubtitle">Chargement…</div>
+        </div>
+        <button class="btn-clear" onclick="clearCart()">Vider le panier</button>
+      </div>
+
+      <div class="cart-empty hidden" id="cartEmpty">
+        <div class="cart-empty-icon">🛒</div>
+        <h3>Votre panier est vide</h3>
+        <p>Ajoutez des produits depuis le catalogue pour passer commande ou demander un devis.</p>
+        <a href="../pages/catalogue.html" class="btn-go-cat">Voir le catalogue →</a>
+      </div>
+
+      <div class="cart-items-list" id="cartItemsList"></div>
+
+      <div class="cart-note" id="cartNoteWrap">
+        <label>Note / Instructions spéciales</label>
+        <textarea id="cartNote" placeholder="Instructions de livraison, ETA du navire, poste à quai, remarques pour l'agent…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- COL DROITE -->
+  <div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Récapitulatif</div>
+      </div>
+      <div class="recap-body">
+        <div class="recap-port">📍 Port de Lomé &nbsp;·&nbsp; MV Atlantic Star</div>
+        <div class="recap-row">
+          <span>Sous-total articles</span>
+          <span class="recap-val" id="recapSubtotal">—</span>
+        </div>
+        <div class="recap-row">
+          <span>Livraison à bord</span>
+          <span class="recap-badge">Sur devis</span>
+        </div>
+        <div class="recap-row">
+          <span>Taxes &amp; droits</span>
+          <span class="recap-badge">À confirmer</span>
+        </div>
+        <div class="recap-divider"></div>
+        <div class="recap-row total">
+          <span>Total estimé</span>
+          <span class="recap-val" id="recapTotal">—</span>
+        </div>
+        <div class="recap-divider"></div>
+        <a href="commande.html" class="btn-order">Passer la commande →</a>
+        <button class="btn-quote-only" onclick="sendQuote()">📋 Demander un devis uniquement</button>
+        <div class="secure-note">🔒 Commande sécurisée · Validée par nos agents</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-head"><div class="card-title" style="font-size:.88rem;">Informations livraison</div></div>
+      <div style="padding:1rem 1.5rem;display:flex;flex-direction:column;gap:.5rem;">
+        <div class="info-row"><span class="info-row-icon">⚡</span><span>Réponse sous <strong>2–4h</strong> en heures ouvrables.</span></div>
+        <div class="info-row"><span class="info-row-icon">🚤</span><span>Livraison à bord par nos bateaux de service — ancrage ou quai.</span></div>
+        <div class="info-row"><span class="info-row-icon">🌍</span><span>Disponible dans <strong>6 pays</strong> d'Afrique de l'Ouest.</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">✅ <span id="toastMsg"></span></div>
+
+<script>
+  var SAMPLE = [
+    {id:1,cat:'Provisions',emoji:'🥩',name:'Fresh & Frozen Products',price:180,unit:'kg',qty:50},
+    {id:2,cat:'Bonded Stores',emoji:'🥃',name:'Spirits & Wines',price:28,unit:'bouteille',qty:24},
+    {id:3,cat:'Safety Equipment',emoji:'🦺',name:'Gilets de sauvetage SOLAS',price:210,unit:'unité',qty:4},
+    {id:4,cat:'Deck / Engine',emoji:'⛓️',name:'Mooring & Towing Equipment',price:85,unit:'mètre',qty:100},
+  ];
+  var cart = JSON.parse(localStorage.getItem('lm_cart') || 'null') || SAMPLE;
+
+  function save(){ localStorage.setItem('lm_cart', JSON.stringify(cart)); }
+  function fmt(n){ return n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' $'; }
+
+  function render(){
+    var list=document.getElementById('cartItemsList');
+    var empty=document.getElementById('cartEmpty');
+    var noteWrap=document.getElementById('cartNoteWrap');
+    var sub=document.getElementById('cartSubtitle');
+    if(!cart.length){
+      list.innerHTML=''; empty.classList.remove('hidden'); noteWrap.style.display='none';
+      sub.textContent='0 article';
+      document.getElementById('recapSubtotal').textContent='—';
+      document.getElementById('recapTotal').textContent='—';
+      return;
+    }
+    empty.classList.add('hidden'); noteWrap.style.display='';
+    var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+    var nb=cart.reduce(function(s,i){return s+i.qty;},0);
+    sub.textContent=cart.length+' référence'+(cart.length>1?'s':'')+' · '+nb+' article'+(nb>1?'s':'');
+    document.getElementById('recapSubtotal').textContent=fmt(total);
+    document.getElementById('recapTotal').textContent=fmt(total);
+    list.innerHTML=cart.map(function(item,idx){
+      return '<div class="cart-item">'+
+        '<div class="item-icon">'+item.emoji+'</div>'+
+        '<div class="item-info"><div class="item-name">'+item.name+'</div><div class="item-cat">'+item.cat+'</div></div>'+
+        '<div class="qty-ctrl">'+
+          '<button class="qty-btn" onclick="chg('+idx+',-1)">−</button>'+
+          '<input class="qty-val" type="number" value="'+item.qty+'" min="1" onchange="setQ('+idx+',this.value)">'+
+          '<button class="qty-btn" onclick="chg('+idx+',1)">+</button>'+
+        '</div>'+
+        '<div><div class="item-price">'+fmt(item.price*item.qty)+'</div><div class="item-unit">'+fmt(item.price)+' / '+item.unit+'</div></div>'+
+        '<button class="btn-remove" onclick="rm('+idx+')" title="Supprimer">✕</button>'+
+      '</div>';
+    }).join('');
+  }
+
+  function chg(i,d){cart[i].qty=Math.max(1,cart[i].qty+d);save();render();}
+  function setQ(i,v){cart[i].qty=Math.max(1,parseInt(v)||1);save();render();}
+  function rm(i){var n=cart[i].name;cart.splice(i,1);save();render();toast(n+' retiré du panier');}
+  function clearCart(){if(!cart.length)return;cart=[];save();render();toast('Panier vidé');}
+  function sendQuote(){toast('Demande de devis envoyée — un agent vous contacte sous 4h');}
+  function toast(msg){
+    var t=document.getElementById('toast');
+    document.getElementById('toastMsg').textContent=msg;
+    t.classList.add('show');
+    setTimeout(function(){t.classList.remove('show');},2500);
+  }
+  render();
+</script>
+</body>
+</html>
