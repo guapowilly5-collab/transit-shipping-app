@@ -7,15 +7,17 @@ require_once __DIR__ . '/../controllers/NavireController.php';
 require_once __DIR__ . '/../controllers/OrderController.php';
 require_once __DIR__ . '/../controllers/DashboardController.php';
 require_once __DIR__ . '/../controllers/UserController.php';
+require_once __DIR__ . '/../controllers/ServiceController.php';
 require_once __DIR__ . '/../middlewares/auth.php';
 
-$auth      = new AuthController();
-$category  = new CategoryController();
-$product   = new ProductController();
-$navire    = new NavireController();
-$order     = new OrderController();
-$dashboard = new DashboardController();
-$user      = new UserController();
+$auth     = new AuthController();
+$category = new CategoryController();
+$product  = new ProductController();
+$navire   = new NavireController();
+$order    = new OrderController();
+$dashboard= new DashboardController();
+$user     = new UserController();
+$service  = new ServiceController();
 
 // Récupérer la méthode HTTP et l'URL
 $method = $_SERVER['REQUEST_METHOD'];
@@ -128,6 +130,19 @@ if ($method === 'POST' && $uri === '/auth/inscription') {
 } elseif ($method === 'DELETE' && $base === '/users' && $id) {
     $user->supprimer($id);
 
+// ── ROUTES SERVICES & REPORTING ───────────────────────────────────
+} elseif ($method === 'GET' && $uri === '/services') {
+    $service->lister();
+
+} elseif ($method === 'GET' && $uri === '/reporting/categories') {
+    $service->reportingCategorie();
+
+} elseif ($method === 'GET' && $uri === '/reporting/periode') {
+    $service->reportingPeriode();
+
+} elseif ($method === 'GET' && $uri === '/reporting/export-csv') {
+    $service->exportCSV();
+
 // ── ROUTE PAR DÉFAUT ──────────────────────────────────────────────
 } else {
     echo json_encode([
@@ -143,6 +158,8 @@ if ($method === 'POST' && $uri === '/auth/inscription') {
             'COMMANDES'  => ['GET /commandes', 'GET /commandes/mes-commandes', 'GET /commandes/:id', 'POST /commandes/en-ligne', 'POST /commandes/agent', 'PUT /commandes/:id'],
             'DASHBOARD'  => ['GET /dashboard/stats'],
             'USERS'      => ['GET /users', 'GET /users/en-attente', 'GET /users/profil', 'PUT /users/:id/valider', 'PUT /users/:id/suspendre', 'DELETE /users/:id'],
+            'SERVICES'   => ['GET /services'],
+            'REPORTING'  => ['GET /reporting/categories', 'GET /reporting/periode', 'GET /reporting/export-csv'],
         ]
     ]);
 }
